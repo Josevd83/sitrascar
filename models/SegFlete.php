@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%seg_flete}}".
+ * This is the model class for table "segflete".
  *
  * @property string $ID
  * @property string $PASOS_ID
@@ -17,14 +17,14 @@ use Yii;
  * @property Flete $fLETE
  * @property Pasos $pASOS
  */
-class SegFlete extends \yii\db\ActiveRecord
+class Segflete extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%seg_flete}}';
+        return 'segflete';
     }
 
     /**
@@ -75,10 +75,10 @@ class SegFlete extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return SegFleteQuery the active query used by this AR class.
+     * @return SegfleteQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new SegFleteQuery(get_called_class());
+        return new SegfleteQuery(get_called_class());
     }
 }

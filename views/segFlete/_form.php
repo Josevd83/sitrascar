@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SegFlete */
+/* @var $model app\models\Segflete */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="seg-flete-form">
+<div class="segflete-form">
 
     <?php $form = ActiveForm::begin(); ?>
 

@@ -45,7 +45,7 @@ class Distribucion extends \yii\db\ActiveRecord
         return [
             [['CENTRALES_ID', 'CARGA_ID', 'CANTIDAD', 'CANT_FLETES'], 'required'],
             [['CENTRALES_ID', 'CARGA_ID', 'CANTIDAD', 'CANT_FLETES', 'DIAS_VENCE_PI', 'CODIGO_SICA', 'CANT_DESPACHADA', 'ESTATUS_DIS'], 'integer'],
-            [['FE_ASIGNACION', 'FE_EMISION_PI', 'FE_VENCE_PI', 'FE_REGISTRO'], 'safe'],
+            [['FE_ASIGNACION', 'FE_EMISION_PI', 'FE_VENCE_PI'], 'safe'],
             [['OBSERVACIONES'], 'string'],
             [['PERMISO_INSAI'], 'string', 'max' => 20],
             [['CANTIDAD'], 'distribucionCarga'],

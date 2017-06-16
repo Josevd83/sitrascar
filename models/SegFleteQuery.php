@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[SegFlete]].
+ * This is the ActiveQuery class for [[Segflete]].
  *
- * @see SegFlete
+ * @see Segflete
  */
-class SegFleteQuery extends \yii\db\ActiveQuery
+class SegfleteQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class SegFleteQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return SegFlete[]|array
+     * @return Segflete[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class SegFleteQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return SegFlete|array|null
+     * @return Segflete|array|null
      */
     public function one($db = null)
     {

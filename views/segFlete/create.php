@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SegFlete */
+/* @var $model app\models\Segflete */
 
-$this->title = 'Create Seg Flete';
-$this->params['breadcrumbs'][] = ['label' => 'Seg Fletes', 'url' => ['index']];
+$this->title = 'Create Segflete';
+$this->params['breadcrumbs'][] = ['label' => 'Segfletes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="seg-flete-create">
+<div class="segflete-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

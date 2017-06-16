@@ -4,10 +4,17 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Centrales;
+use app\models\Estado;
+use app\models\Municipio;
+use app\models\Parroquia;
 use app\models\CentralesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
+use yii\web\Response;
+use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
 
 /**
  * CentralesController implements the CRUD actions for Centrales model.
@@ -120,5 +127,36 @@ class CentralesController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+	 public function actionGetestadomunicipio() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id = $parents[0];
+
+                $out = Municipio::find()->select(['municipio.ID as id','municipio.NOMBRE as name'])->where('municipio.ESTADO_ID ='.$cat_id)->asArray()->all();
+
+                echo Json::encode(['output'=>$out, 'selected'=>'']);
+                return;
+            }
+        }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
+    }
+	
+	 public function actionGetmunicipioparroquia() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $cat_id2 = $parents[0];
+
+                $out = Parroquia::find()->select(['parroquia.ID as id','parroquia.NOMBRE as name'])->where('parroquia.MUNICIPIO_ID ='.$cat_id2)->asArray()->all();
+
+                echo Json::encode(['output'=>$out, 'selected'=>'']);
+                return;
+            }
+        }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
     }
 }

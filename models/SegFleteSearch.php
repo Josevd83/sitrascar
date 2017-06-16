@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\SegFlete;
+use app\models\Segflete;
 
 /**
- * SegFleteSearch represents the model behind the search form about `app\models\SegFlete`.
+ * SegfleteSearch represents the model behind the search form about `app\models\Segflete`.
  */
-class SegFleteSearch extends SegFlete
+class SegfleteSearch extends Segflete
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class SegFleteSearch extends SegFlete
      */
     public function search($params)
     {
-        $query = SegFlete::find();
+        $query = Segflete::find();
 
         // add conditions that should always apply here
 

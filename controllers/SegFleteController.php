@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\SegFlete;
-use app\models\SegFleteSearch;
+use app\models\Segflete;
+use app\models\SegfleteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SegFleteController implements the CRUD actions for SegFlete model.
+ * SegfleteController implements the CRUD actions for Segflete model.
  */
-class SegFleteController extends Controller
+class SegfleteController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class SegFleteController extends Controller
     }
 
     /**
-     * Lists all SegFlete models.
+     * Lists all Segflete models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SegFleteSearch();
+        $searchModel = new SegfleteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class SegFleteController extends Controller
     }
 
     /**
-     * Displays a single SegFlete model.
+     * Displays a single Segflete model.
      * @param string $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class SegFleteController extends Controller
     }
 
     /**
-     * Creates a new SegFlete model.
+     * Creates a new Segflete model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new SegFlete();
+        $model = new Segflete();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -75,7 +75,7 @@ class SegFleteController extends Controller
     }
 
     /**
-     * Updates an existing SegFlete model.
+     * Updates an existing Segflete model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -94,7 +94,7 @@ class SegFleteController extends Controller
     }
 
     /**
-     * Deletes an existing SegFlete model.
+     * Deletes an existing Segflete model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -107,15 +107,15 @@ class SegFleteController extends Controller
     }
 
     /**
-     * Finds the SegFlete model based on its primary key value.
+     * Finds the Segflete model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return SegFlete the loaded model
+     * @return Segflete the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = SegFlete::findOne($id)) !== null) {
+        if (($model = Segflete::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

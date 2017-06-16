@@ -91,16 +91,6 @@ use yii\web\View;
 </div>
 <?php $this->registerJs("
 
-    //$('input[type=checkbox]').change(function() {
-	//$('.concepto').change(function() {
-//alert(123);
-	//$('input[type=checkbox]:checked').each(function() {
-	//$('.concepto:checked').each(function() {
-           //var sum = 0;
-	   //sum += parseFloat($(this).attr('rel'));
-	   //$('#totalMonto').val(sum);
-        //});
-    //});
 
 	$('.concepto').change(function () {
 	    var count = 0;

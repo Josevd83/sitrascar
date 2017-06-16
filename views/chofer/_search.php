@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'PRIMER_NOMBRE') ?>
 
-    <?= $form->field($model, 'SEGUNDO_NOMBRE') ?>
+    <?php // echo $form->field($model, 'SEGUNDO_NOMBRE') ?>
 
     <?= $form->field($model, 'PRIMER_APELLIDO') ?>
 
@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'CORREO') ?>
 
-    <?php // echo $form->field($model, 'TELEFONO_1') ?>
+    <?= $form->field($model, 'TELEFONO_1') ?>
 
     <?php // echo $form->field($model, 'TELEFONO_2') ?>
 

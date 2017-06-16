@@ -12,6 +12,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'ESTATUS_FLETE_ID')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'EMPRESA_CHOFER_ID')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'VEHICULO_ID')->textInput(['maxlength' => true]) ?>
@@ -38,13 +40,35 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'FE_EMISION_OCTQ')->textInput() ?>
 
+    <?= $form->field($model, 'FE_IN_BOL')->textInput() ?>
+
+    <?= $form->field($model, 'FE_PE_TARA_BOL')->textInput() ?>
+
+    <?= $form->field($model, 'PESO_TARA_BOL')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'FE_PE_CAR_BOL')->textInput() ?>
+
+    <?= $form->field($model, 'PESO_CAR_BOL')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'FE_OUT_BOL')->textInput() ?>
+
+    <?= $form->field($model, 'FE_IN_CEN')->textInput() ?>
+
+    <?= $form->field($model, 'FE_PE_CAR_CEN')->textInput() ?>
+
+    <?= $form->field($model, 'PESO_CAR_CEN')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'FE_PE_TARA_CEN')->textInput() ?>
+
+    <?= $form->field($model, 'PE_TARA_CEN')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'PESO_CARGA')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'PESO_DESCARGA')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'GUIA_RECEPCION')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'FALTANTE')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ESTATUS_FLETE')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'GUIA_RECEP')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'OBSERVACIONES')->textarea(['rows' => 6]) ?>
 

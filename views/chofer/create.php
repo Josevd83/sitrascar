@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Chofer */
 
-$this->title = 'Create Chofer';
+$this->title = 'NUEVO CHOFER';
 $this->params['breadcrumbs'][] = ['label' => 'Chofers', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

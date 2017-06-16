@@ -76,8 +76,9 @@ class DistribucionController extends Controller
                 return ActiveForm::validate($model);
         }
 
-        //if ($model->load(Yii::$app->request->post()) && $model->save()) {
         if ($model->load(Yii::$app->request->post())) {
+			$date = date('Y-m-d');
+            $model->FE_REGISTRO = $date;
             $cantidadAsignada = $model->CANTIDAD;
             $modelCarga = Carga::findOne(['ID'=>$model->CARGA_ID]);
             $sumaCarga = $modelCarga->PESO_DISTRIBUIDO+$cantidadAsignada;
@@ -102,8 +103,21 @@ class DistribucionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+		$cantidadAnterior = $model->CANTIDAD;
+		if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+        }
+		//if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+			$cantidadAsignada = $model->CANTIDAD;
+            $modelCarga = Carga::findOne(['ID'=>$model->CARGA_ID]);
+		    $pesodistribuido=$modelCarga->PESO_DISTRIBUIDO-$cantidadAnterior;
+            $sumaCarga = $pesodistribuido+$cantidadAsignada;
+            $modelCarga->PESO_DISTRIBUIDO=$sumaCarga;
+            if($modelCarga->save()){
+                $model->save();
+            }
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [

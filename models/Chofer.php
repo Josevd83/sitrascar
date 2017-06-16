@@ -67,15 +67,15 @@ class Chofer extends \yii\db\ActiveRecord
             'PRIMER_APELLIDO' => 'Primer  Apellido',
             'SEGUNDO_APELLIDO' => 'Segundo  Apellido',
             'RIF' => 'Rif',
-            'DIRECCION' => 'Direccion',
-            'CORREO' => 'Correo',
-            'TELEFONO_1' => 'Telefono 1',
-            'TELEFONO_2' => 'Telefono 2',
-            'FE_VENCE_CER' => 'Fe  Vence  Cer',
-            'FE_VENCE_LIC' => 'Fe  Vence  Lic',
-            'IMG_CEDULA' => 'Img  Cedula',
-            'IMG_LICENCIA' => 'Img  Licencia',
-            'IMG_CERTIFICADO' => 'Img  Certificado',
+            'DIRECCION' => 'Direccion de Habitacion',
+            'CORREO' => 'Correo Electronico',
+            'TELEFONO_1' => 'Telefono Principal',
+            'TELEFONO_2' => 'Telefono Alternativo',
+            'FE_VENCE_CER' => 'Fecha de Vencimiento del Certificado Medico',
+            'FE_VENCE_LIC' => 'Fecha de Vencimiento de la Licencia',
+            'IMG_CEDULA' => 'Imagen  Cedula',
+            'IMG_LICENCIA' => 'Imgagen  Licencia',
+            'IMG_CERTIFICADO' => 'Imagen Certificado Medico',
             'ESTATUS' => 'Estatus',
         ];
     }
@@ -96,34 +96,5 @@ class Chofer extends \yii\db\ActiveRecord
     {
         return new ChoferQuery(get_called_class());
     }
-    }
-    class FormUpload extends model{
-  
-    public $IMG_CEDULA;
-     
-    public function rules()
-    {
-        return [
-            ['IMG_CEDULA', 'IMG_CEDULA',                 
-   'skipOnEmpty' => false,
-   'uploadRequired' => 'No has seleccionado ningún archivo', //Error
-   'maxSize' => 1024*1024*5, //1 MB
-   'tooBig' => 'El tamaño máximo permitido es 1MB', //Error
-   'minSize' => 10, //10 Bytes
-   'tooSmall' => 'El tamaño mínimo permitido son 10 BYTES', //Error
-   'extensions' => 'pdf, txt, doc',
-   'wrongExtension' => 'El archivo {file} no contiene una extensión permitida {extensions}', //Error
-   'maxFiles' => 4,
-   'tooMany' => 'El máximo de archivos permitidos son {limit}', //Error
-   ],
-        ]; 
-    } 
- 
- public function attributeLabels()
- {
-  return [
-   'file' => 'Seleccionar archivos:',
-  ];
- }
 }
 

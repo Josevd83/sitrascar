@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SegFleteSearch */
+/* @var $model app\models\SegfleteSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="seg-flete-search">
+<div class="segflete-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],

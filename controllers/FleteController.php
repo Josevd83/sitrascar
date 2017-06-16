@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Flete;
+use app\models\Segflete;
+use app\models\SegfleteSearch;
 use app\models\Lista;
 use app\models\Distribucion;
 use app\models\FleteSearch;
@@ -135,6 +137,19 @@ class FleteController extends Controller
                 'modelLista'=>$modelLista,
                 'modelFlete'=>$modelFlete,
                 'modelDistribucion'=>$modelDistribucion,
+            ]);
+    }
+	public function actionPesaje()
+    {
+        $id = 1;
+        $modelLista = Lista::findOne($id);
+		$modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+        $modelFlete = Flete::findAll(['LISTA_ID'=>$id]);		
+        return $this->render('pesaje', [
+                'modelLista'=>$modelLista,
+                'modelFlete'=>$modelFlete,
+                'modelDistribucion'=>$modelDistribucion,
+				
             ]);
     }
 }

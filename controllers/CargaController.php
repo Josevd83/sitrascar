@@ -68,9 +68,14 @@ class CargaController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             //$model->FECHA_REGISTRO = 'curdate()';
-            $model->FECHA_REGISTRO = new Expression('NOW()');
+            $date = date('Y-m-d');
+            //var_dump($date);die;
+            $model->FECHA_REGISTRO = $date;
+            //var_dump($model->FECHA_REGISTRO);die;
+            //$model->FECHA_REGISTRO = new Expression('NOW');
             //var_dump(curdate);die;
             $model->save();
+            
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('create', [

@@ -53,9 +53,9 @@ use kartik\widgets\DatePicker;
 
     <?= $form->field($model, 'ESTATUS_CARGA')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'PESO_DISTRIBUIDO')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'PESO_DISTRIBUIDO')->textInput(['disabled' => true]) ?>
 
-    <?= $form->field($model, 'FECHA_REGISTRO')->textInput() ?>
+    <?= $form->field($model, 'FECHA_REGISTRO')->textInput(['disabled' => true]) ?>
 
     <?= $form->field($model, 'OBSERVACIONES')->textarea(['rows' => 6]) ?>
 

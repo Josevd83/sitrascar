@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
-
+use kartik\widgets\DepDrop;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Centrales */
@@ -17,8 +18,26 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ESTADO_ID')->dropDownList($var, ['prompt' => 'Seleccione' ]) ?>
     
-    <?= $form->field($model, 'MUNICIPIO_ID')->textInput(['maxlength' => true]) ?>
-    
+     <?php
+        echo $form->field($model, 'MUNICIPIO_ID')->widget(DepDrop::classname(), [
+            'options'=>['id'=>'subcat-id'],
+            'pluginOptions'=>[
+                'depends'=>['centrales-estado_id'],
+                'placeholder'=>'Seleccione',
+                'url'=>Url::to(['centrales/getestadomunicipio'])
+            ]
+        ]);
+     ?>
+     <?php
+        echo $form->field($model, 'PARROQUIA_ID')->widget(DepDrop::classname(), [
+            'options'=>['id'=>'subcat-id2'],
+            'pluginOptions'=>[
+                'depends'=>['subcat-id'],
+                'placeholder'=>'Seleccione',
+                'url'=>Url::to(['centrales/getmunicipioparroquia'])
+            ]
+        ]);
+    ?>
     <?= $form->field($model, 'PARROQUIA_ID')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'NOMBRE')->textInput(['maxlength' => true]) ?>

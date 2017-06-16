@@ -29,7 +29,6 @@ use kartik\widgets\DepDrop;
             ]
         ]);
     ?>
-
     <?= $form->field($model, 'CANTIDAD', ['enableAjaxValidation' => true])->textInput(['maxlength' => true]) ?>
 
     <?= '<label class="control-label">Fecha de Asignacion</label>'; ?>

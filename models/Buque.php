@@ -41,7 +41,7 @@ class Buque extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'NOMBRE' => 'Nombre',
+            'NOMBRE' => 'Nombre del Buque',
             'ESTATUS' => 'Estatus',
         ];
     }

@@ -47,9 +47,9 @@ class Carga extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['TIPO_CARGA_ID', 'PUERTO_ID', 'RUBROS_ID', 'PAIS_ID', 'BUQUE_ID', 'FECHA_ATRAQUE', 'ESTATUS_CARGA', 'FECHA_REGISTRO'], 'required'],
+            [['TIPO_CARGA_ID', 'PUERTO_ID', 'RUBROS_ID', 'PAIS_ID', 'BUQUE_ID', 'FECHA_ATRAQUE', 'ESTATUS_CARGA'], 'required'],
             [['TIPO_CARGA_ID', 'PUERTO_ID', 'RUBROS_ID', 'PAIS_ID', 'BUQUE_ID', 'BL', 'MUELLE', 'ESTATUS_CARGA'], 'integer'],
-            [['FECHA_ATRAQUE', 'FECHA_REGISTRO'], 'safe'],
+            [['FECHA_ATRAQUE'], 'safe'],
             [['PESO', 'PESO_ASIGNADO', 'PESO_DISTRIBUIDO'], 'number'],
             [['OBSERVACIONES'], 'string'],
             [['COD_VIAJE'], 'string', 'max' => 50],

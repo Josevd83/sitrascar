@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="chofer-form">
-
+	<?php $var = [0 => 'INACTIVO', 1 => 'ACTIVO'] ?>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'CEDULA')->textInput(['maxlength' => true]) ?>
@@ -42,10 +42,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'IMG_CERTIFICADO')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ESTATUS')->dropDownList([ '0', '1', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'ESTATUS')->dropDownList($var, ['prompt' => 'Seleccione']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'NUEVO CHOFER' : 'ACTUALIZAR CHOFER', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

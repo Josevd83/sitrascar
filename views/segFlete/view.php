@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\SegFlete */
+/* @var $model app\models\Segflete */
 
 $this->title = $model->ID;
-$this->params['breadcrumbs'][] = ['label' => 'Seg Fletes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Segfletes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="seg-flete-view">
+<div class="segflete-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

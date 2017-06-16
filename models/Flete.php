@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "{{%flete}}".
  *
  * @property string $ID
+ * @property string $ESTATUS_FLETE_ID
  * @property string $EMPRESA_CHOFER_ID
  * @property string $VEHICULO_ID
  * @property string $LISTA_ID
@@ -21,21 +22,32 @@ use Yii;
  * @property string $FE_EMISION_OCCVA
  * @property string $ORDEN_CARGA_TQ
  * @property string $FE_EMISION_OCTQ
+ * @property string $FE_IN_BOL
+ * @property string $FE_PE_TARA_BOL
+ * @property string $PESO_TARA_BOL
+ * @property string $FE_PE_CAR_BOL
+ * @property string $PESO_CAR_BOL
+ * @property string $FE_OUT_BOL
+ * @property string $FE_IN_CEN
+ * @property string $FE_PE_CAR_CEN
+ * @property string $PESO_CAR_CEN
+ * @property string $FE_PE_TARA_CEN
+ * @property string $PE_TARA_CEN
  * @property string $PESO_CARGA
  * @property string $PESO_DESCARGA
- * @property string $GUIA_RECEPCION
- * @property string $ESTATUS_FLETE
+ * @property string $FALTANTE
+ * @property string $GUIA_RECEP
  * @property string $OBSERVACIONES
  *
  * @property Lista $lISTA
  * @property Vehiculo $vEHICULO
  * @property EmpresaChofer $eMPRESACHOFER
  * @property Pagos[] $pagos
- * @property SegFlete[] $segFletes
+ * @property Segflete[] $segfletes
  */
 class Flete extends \yii\db\ActiveRecord
 {
-    public $chofer;
+	public $chofer;
     /**
      * @inheritdoc
      */
@@ -50,9 +62,10 @@ class Flete extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['EMPRESA_CHOFER_ID', 'VEHICULO_ID', 'LISTA_ID'], 'required'],
-            [['EMPRESA_CHOFER_ID', 'VEHICULO_ID', 'LISTA_ID', 'GUIA_SADA', 'DIAS_VENCE_GS', 'ORDEN_PESO_CARGA', 'ORDEN_CARGA_CVA', 'ORDEN_CARGA_TQ', 'PESO_CARGA', 'PESO_DESCARGA', 'GUIA_RECEPCION', 'ESTATUS_FLETE'], 'integer'],
-            [['FE_EMISION_GS', 'FE_VENCE_GS', 'FE_EMISION_OPC', 'FE_EMISION_OCCVA', 'FE_EMISION_OCTQ'], 'safe'],
+            [['ESTATUS_FLETE_ID', 'EMPRESA_CHOFER_ID', 'VEHICULO_ID', 'LISTA_ID'], 'required'],
+            [['ESTATUS_FLETE_ID', 'EMPRESA_CHOFER_ID', 'VEHICULO_ID', 'LISTA_ID', 'GUIA_SADA', 'DIAS_VENCE_GS', 'ORDEN_PESO_CARGA', 'ORDEN_CARGA_CVA', 'ORDEN_CARGA_TQ', 'GUIA_RECEP'], 'integer'],
+            [['FE_EMISION_GS', 'FE_VENCE_GS', 'FE_EMISION_OPC', 'FE_EMISION_OCCVA', 'FE_EMISION_OCTQ', 'FE_IN_BOL', 'FE_PE_TARA_BOL', 'FE_PE_CAR_BOL', 'FE_OUT_BOL', 'FE_IN_CEN', 'FE_PE_CAR_CEN', 'FE_PE_TARA_CEN'], 'safe'],
+            [['PESO_TARA_BOL', 'PESO_CAR_BOL', 'PESO_CAR_CEN', 'PE_TARA_CEN', 'PESO_CARGA', 'PESO_DESCARGA', 'FALTANTE'], 'number'],
             [['OBSERVACIONES'], 'string'],
             [['LISTA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Lista::className(), 'targetAttribute' => ['LISTA_ID' => 'ID']],
             [['VEHICULO_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Vehiculo::className(), 'targetAttribute' => ['VEHICULO_ID' => 'ID']],
@@ -67,6 +80,7 @@ class Flete extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
+            'ESTATUS_FLETE_ID' => 'Estatus  Flete  ID',
             'EMPRESA_CHOFER_ID' => 'Empresa  Chofer  ID',
             'VEHICULO_ID' => 'Vehiculo  ID',
             'LISTA_ID' => 'Lista  ID',
@@ -80,10 +94,21 @@ class Flete extends \yii\db\ActiveRecord
             'FE_EMISION_OCCVA' => 'Fe  Emision  Occva',
             'ORDEN_CARGA_TQ' => 'Orden  Carga  Tq',
             'FE_EMISION_OCTQ' => 'Fe  Emision  Octq',
+            'FE_IN_BOL' => 'Fe  In  Bol',
+            'FE_PE_TARA_BOL' => 'Fe  Pe  Tara  Bol',
+            'PESO_TARA_BOL' => 'Peso  Tara  Bol',
+            'FE_PE_CAR_BOL' => 'Fe  Pe  Car  Bol',
+            'PESO_CAR_BOL' => 'Peso  Car  Bol',
+            'FE_OUT_BOL' => 'Fe  Out  Bol',
+            'FE_IN_CEN' => 'Fe  In  Cen',
+            'FE_PE_CAR_CEN' => 'Fe  Pe  Car  Cen',
+            'PESO_CAR_CEN' => 'Peso  Car  Cen',
+            'FE_PE_TARA_CEN' => 'Fe  Pe  Tara  Cen',
+            'PE_TARA_CEN' => 'Pe  Tara  Cen',
             'PESO_CARGA' => 'Peso  Carga',
             'PESO_DESCARGA' => 'Peso  Descarga',
-            'GUIA_RECEPCION' => 'Guia  Recepcion',
-            'ESTATUS_FLETE' => 'Estatus  Flete',
+            'FALTANTE' => 'Faltante',
+            'GUIA_RECEP' => 'Guia  Recep',
             'OBSERVACIONES' => 'Observaciones',
         ];
     }
@@ -123,9 +148,9 @@ class Flete extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSegFletes()
+    public function getSegfletes()
     {
-        return $this->hasMany(SegFlete::className(), ['FLETE_ID' => 'ID']);
+        return $this->hasMany(Segflete::className(), ['FLETE_ID' => 'ID']);
     }
 
     /**

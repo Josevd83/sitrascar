@@ -17,13 +17,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ID') ?>
 
+    <?= $form->field($model, 'ESTATUS_FLETE_ID') ?>
+
     <?= $form->field($model, 'EMPRESA_CHOFER_ID') ?>
 
     <?= $form->field($model, 'VEHICULO_ID') ?>
 
     <?= $form->field($model, 'LISTA_ID') ?>
 
-    <?= $form->field($model, 'GUIA_SADA') ?>
+    <?php // echo $form->field($model, 'GUIA_SADA') ?>
 
     <?php // echo $form->field($model, 'FE_EMISION_GS') ?>
 
@@ -43,13 +45,35 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'FE_EMISION_OCTQ') ?>
 
+    <?php // echo $form->field($model, 'FE_IN_BOL') ?>
+
+    <?php // echo $form->field($model, 'FE_PE_TARA_BOL') ?>
+
+    <?php // echo $form->field($model, 'PESO_TARA_BOL') ?>
+
+    <?php // echo $form->field($model, 'FE_PE_CAR_BOL') ?>
+
+    <?php // echo $form->field($model, 'PESO_CAR_BOL') ?>
+
+    <?php // echo $form->field($model, 'FE_OUT_BOL') ?>
+
+    <?php // echo $form->field($model, 'FE_IN_CEN') ?>
+
+    <?php // echo $form->field($model, 'FE_PE_CAR_CEN') ?>
+
+    <?php // echo $form->field($model, 'PESO_CAR_CEN') ?>
+
+    <?php // echo $form->field($model, 'FE_PE_TARA_CEN') ?>
+
+    <?php // echo $form->field($model, 'PE_TARA_CEN') ?>
+
     <?php // echo $form->field($model, 'PESO_CARGA') ?>
 
     <?php // echo $form->field($model, 'PESO_DESCARGA') ?>
 
-    <?php // echo $form->field($model, 'GUIA_RECEPCION') ?>
+    <?php // echo $form->field($model, 'FALTANTE') ?>
 
-    <?php // echo $form->field($model, 'ESTATUS_FLETE') ?>
+    <?php // echo $form->field($model, 'GUIA_RECEP') ?>
 
     <?php // echo $form->field($model, 'OBSERVACIONES') ?>
 

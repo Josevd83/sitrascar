@@ -157,23 +157,5 @@ class ChoferController extends Controller
     // return the pdf output as per the destination setting
         return $pdf->render(); 
     }
-    public function actionUpload()
- {
-  
-  $model = new FormUpload;
-  $msg = null;
-  
-  if ($model->load(Yii::$app->request->post()))
-  {
-   $model->file = UploadedFile::getInstances($model, 'IMG_CEDULA');
-
-   if ($model->file && $model->validate()) {
-    foreach ($model->file as $file) {
-     $file->saveAs('archivos/' . $file->baseName . '.' . $file->extension);
-     $msg = "<p><strong class='label label-info'>Enhorabuena, subida realizada con éxito</strong></p>";
-    }
-   }
-  }
-  return $this->render("upload", ["model" => $model, "msg" => $msg]);
- }
+   
 }

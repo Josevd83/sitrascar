@@ -27,7 +27,7 @@ use yii\web\View;
                         <h3>Detalle del Flete</h3>
                         <p><b>Central:</b> <?= $modelFlete->lISTA->dISTRIBUCION->cENTRALES->NOMBRE ?></p>
                         <p><b>Guia SADA:</b> <?= $modelFlete->GUIA_SADA ?></p>
-                        <p><b>Guia Recepción:</b> <?= $modelFlete->GUIA_RECEPCION ?></p>
+                        <p><b>Guia Recepción:</b> <?= $modelFlete->GUIA_RECEP ?></p>
                         <p><b>Observaciones:</b> <?= $modelFlete->OBSERVACIONES ?></p>
                     </div>
                 </div>
