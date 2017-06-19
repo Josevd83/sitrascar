@@ -19,6 +19,7 @@ class TarifasSearch extends Tarifas
     {
         return [
             [['ID', 'CONCEPTOS_ID', 'CENTRALES_ID'], 'integer'],
+            [['MONTO'], 'number'],
         ];
     }
 
@@ -61,6 +62,7 @@ class TarifasSearch extends Tarifas
             'ID' => $this->ID,
             'CONCEPTOS_ID' => $this->CONCEPTOS_ID,
             'CENTRALES_ID' => $this->CENTRALES_ID,
+            'MONTO' => $this->MONTO,
         ]);
 
         return $dataProvider;

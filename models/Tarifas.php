@@ -7,9 +7,10 @@ use Yii;
 /**
  * This is the model class for table "{{%tarifas}}".
  *
- * @property string $ID
- * @property string $CONCEPTOS_ID
- * @property string $CENTRALES_ID
+ * @property integer $ID
+ * @property integer $CONCEPTOS_ID
+ * @property integer $CENTRALES_ID
+ * @property string $MONTO
  *
  * @property Centrales $cENTRALES
  * @property Conceptos $cONCEPTOS
@@ -32,6 +33,7 @@ class Tarifas extends \yii\db\ActiveRecord
         return [
             [['CONCEPTOS_ID', 'CENTRALES_ID'], 'required'],
             [['CONCEPTOS_ID', 'CENTRALES_ID'], 'integer'],
+            [['MONTO'], 'number'],
             [['CENTRALES_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Centrales::className(), 'targetAttribute' => ['CENTRALES_ID' => 'ID']],
             [['CONCEPTOS_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Conceptos::className(), 'targetAttribute' => ['CONCEPTOS_ID' => 'ID']],
         ];
@@ -46,6 +48,7 @@ class Tarifas extends \yii\db\ActiveRecord
             'ID' => 'ID',
             'CONCEPTOS_ID' => 'Conceptos  ID',
             'CENTRALES_ID' => 'Centrales  ID',
+            'MONTO' => 'Monto',
         ];
     }
 

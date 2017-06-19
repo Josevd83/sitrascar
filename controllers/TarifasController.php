@@ -46,7 +46,7 @@ class TarifasController extends Controller
 
     /**
      * Displays a single Tarifas model.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -77,7 +77,7 @@ class TarifasController extends Controller
     /**
      * Updates an existing Tarifas model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -96,7 +96,7 @@ class TarifasController extends Controller
     /**
      * Deletes an existing Tarifas model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -109,7 +109,7 @@ class TarifasController extends Controller
     /**
      * Finds the Tarifas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
+     * @param integer $id
      * @return Tarifas the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
