@@ -115,10 +115,10 @@ use yii\web\View;
             var id_empresa = $('#lista-empresa').val();
             var limiteChoferes = $('.selected option:not(:selected)').length;
             if(limiteChoferes >= 20){
-                alert('Límite de choferes alcanzado (20)');
+                ////alert('Límite de choferes alcanzado (20)');
                 return false;
             }
-            alert(limiteChoferes);
+            ////alert(limiteChoferes);
             var choferesSeleccionados = [];
             $('.selected option:not(:selected)').each(function(i, value){ 
               //choferesSeleccionados[i] = $('.selected').text(); 
@@ -129,7 +129,7 @@ use yii\web\View;
               choferesSeleccionados[i] = $(this).attr('value'); 
             });*/
 console.log(choferesSeleccionados);
-            alert(choferesSeleccionados);
+            ////alert(choferesSeleccionados);
             $('.unselected').empty();
             /*$.post( '".Url::toRoute("lista/buscarchofer")."&id='+id_empresa,
                  function(data){

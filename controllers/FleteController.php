@@ -133,6 +133,7 @@ class FleteController extends Controller
         $modelLista = Lista::findOne($id);
         $modelFlete = Flete::findAll(['LISTA_ID'=>$id]);
         $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+//$modelDistribucion->FE_REGISTRO = Yii::$app->formatter->asDate($modelDistribucion->FE_REGISTRO, 'Y-MM-dd');
         return $this->render('pinsaigsada', [
                 'modelLista'=>$modelLista,
                 'modelFlete'=>$modelFlete,

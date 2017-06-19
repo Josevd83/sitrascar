@@ -20,6 +20,7 @@ $this->registerCss("
     <?= $form->field($modelDistribucion, 'PERMISO_INSAI')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
+	<?php if($modelDistribucion->FE_EMISION_PI)$modelDistribucion->FE_EMISION_PI = Yii::$app->formatter->asDate($modelDistribucion->FE_EMISION_PI, 'dd-MM-Y'); ?>
         <?php echo '<label class="control-label">Fecha de Carga</label>'; ?>
         <?php echo DatePicker::widget([
                 'model' => $modelDistribucion, 
@@ -34,68 +35,6 @@ $this->registerCss("
     </div>
 
     <?php echo '<label class="control-label">Transportistas</label>'; ?>
-<div>
-    <?php foreach($modelFlete as $index => $flete):  ?>
-        <div class="row">
-            <div>
-                <div class="col-sm-12">
-                    <?php  $flete->chofer = $flete->nomApeChofer() ?>
-                    <?= $form->field($flete, "[$index]chofer")->textInput(['maxlength' => true,'placeholder'=>'text','disabled'=>true])->label(false); ?>
-                </div>
-            </div>
-            
-            <div class="col-sm-2">
-                <?= $form->field($flete, "[$index]GUIA_SADA", ['inputOptions'=>['placeholder'=>$flete->getAttributeLabel('GUIA_SADA')]])->textInput(['maxlength' => true])->label(false); ?>
-            </div>
-            <div class="col-sm-2">
-                <?php echo DatePicker::widget([
-                        'model' => $flete, 
-                        'attribute' => "[$index]FE_EMISION_GS",
-                        'removeButton' => false,
-                        'options' => ['placeholder' => $flete->getAttributeLabel('FE_EMISION_GS')],
-                        'pluginOptions' => [
-                            'autoclose'=>true
-                        ]
-                    ]); 
-                ?>
-            </div>
-            <div class="col-sm-2">
-                <?php echo DatePicker::widget([
-                        'model' => $flete, 
-                        'attribute' => "[$index]FE_VENCE_GS",
-                        'removeButton' => false,
-                        'options' => ['placeholder' => $flete->getAttributeLabel('FE_VENCE_GS')],
-                        'pluginOptions' => [
-                            'autoclose'=>true
-                        ]
-                    ]); 
-                ?>
-            </div>
-            <div class="col-sm-2">
-                <?= $form->field($flete, "[$index]ORDEN_PESO_CARGA", ['inputOptions'=>['placeholder'=>$flete->getAttributeLabel('ORDEN_PESO_CARGA')]])->textInput(['maxlength' => true])->label(false); ?>
-            </div>
-            <div class="col-sm-2">
-                <?= $form->field($flete, "[$index]PESO_CARGA", ['inputOptions'=>['placeholder'=>$flete->getAttributeLabel('PESO_CARGA')]])->textInput(['maxlength' => true])->label(false); ?>
-            </div>
-            <div class="col-sm-2">
-                <?php echo DatePicker::widget([
-                        'model' => $flete, 
-                        'attribute' => "[$index]FE_EMISION_OPC",
-                        'removeButton' => false,
-                        'options' => ['placeholder' => $flete->getAttributeLabel('FE_EMISION_OPC')],
-                        'pluginOptions' => [
-                            'autoclose'=>true
-                        ]
-                    ]); 
-                ?>
-            </div>
-
-            <div class="col-sm-12" style="margin-bottom:10px;"><hr style="border-bottom:1px dashed #ccc;"></div>
-
-        </div>
-    <?php endforeach ?>
-</div>
-
 <!---------------------------------------->
 <!---------------------------------------->
     <div id="integration-list">
@@ -123,14 +62,19 @@ $this->registerCss("
                             <?= $form->field($flete, "[$index]GUIA_SADA", ['inputOptions'=>['placeholder'=>$flete->getAttributeLabel('GUIA_SADA')]])->textInput(['maxlength' => true])->label(false); ?>
                         </div>
                         <div class="col-sm-2">
+			    <?php if($flete->FE_EMISION_GS)$flete->FE_EMISION_GS = Yii::$app->formatter->asDate($flete->FE_EMISION_GS, 'dd-MM-Y'); ?>
                             <?php echo DatePicker::widget([
                                     'model' => $flete, 
                                     'attribute' => "[$index]FE_EMISION_GS",
                                     'removeButton' => false,
                                     'options' => ['placeholder' => $flete->getAttributeLabel('FE_EMISION_GS')],
                                     'pluginOptions' => [
-                                        'autoclose'=>true
-                                    ]
+                                        'autoclose'=>true,
+					'format' => 'dd-mm-yyyy',
+                                    ],
+				    'options' => [
+					'class' => 'fechaEmision',
+				    ]
                                 ]); 
                             ?>
                         </div>
@@ -140,9 +84,15 @@ $this->registerCss("
                                     'attribute' => "[$index]FE_VENCE_GS",
                                     'removeButton' => false,
                                     'options' => ['placeholder' => $flete->getAttributeLabel('FE_VENCE_GS')],
+				    //'readonly' => true,
+				    'disabled' => true,
                                     'pluginOptions' => [
-                                        'autoclose'=>true
-                                    ]
+                                        'autoclose'=>true,
+					'format' => 'dd-mm-yyyy'
+                                    ],
+				    'options' => [
+					'class' => 'fechaVencimiento',
+				    ]
                                 ]); 
                             ?>
                         </div>
@@ -159,7 +109,8 @@ $this->registerCss("
                                     'removeButton' => false,
                                     'options' => ['placeholder' => $flete->getAttributeLabel('FE_EMISION_OPC')],
                                     'pluginOptions' => [
-                                        'autoclose'=>true
+                                        'autoclose'=>true,
+					'format' => 'dd-mm-yyyy'
                                     ]
                                 ]); 
                             ?>
@@ -181,6 +132,13 @@ $this->registerCss("
 </div>
 
 <?php
+$this->registerJsFile(
+    '@web/js/funciones.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+?>
+
+<?php
 $this->registerJs(
     '$(function() {
       $(".expand").on( "click", function() {
@@ -193,7 +151,13 @@ $this->registerJs(
           $expand.text("+");
         }
       });
-    });',
+    });
+
+	$(".fechaEmision").on("change",function(){
+		var fecha = sumaFecha(3,$(this).val());
+		$(this).closest("li").find(".fechaVencimiento").val(fecha);
+	});
+    ',
     View::POS_READY
     //'my-button-handler'
 );
