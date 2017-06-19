@@ -33,8 +33,9 @@ class Lista extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['DISTRIBUCION_ID'], 'required'],
-            [['DISTRIBUCION_ID', 'FECHA_CREACION', 'ESTATUS_LISTA'], 'integer'],
+            [['DISTRIBUCION_ID','FECHA_CREACION'], 'required'],
+            [['DISTRIBUCION_ID', 'ESTATUS_LISTA'], 'integer'],
+            //[['FECHA_CREACION'], 'safe'],
             [['DISTRIBUCION_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Distribucion::className(), 'targetAttribute' => ['DISTRIBUCION_ID' => 'ID']],
         ];
     }
@@ -46,7 +47,7 @@ class Lista extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'DISTRIBUCION_ID' => 'Distribucion  ID',
+            'DISTRIBUCION_ID' => 'Distribucion',
             'FECHA_CREACION' => 'Fecha  Creacion',
             'ESTATUS_LISTA' => 'Estatus  Lista',
             'empresa' => 'Empresa',

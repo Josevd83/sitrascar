@@ -27,10 +27,13 @@ use yii\web\View;
     <?php
         echo $form->field($model, 'DISTRIBUCION_ID')->widget(DepDrop::classname(), [
             'options'=>['id'=>'subcat-id'],
+            'data'=>[$modelDistribucion->ID => $modelDistribucion->OBSERVACIONES],
+            'select2Options'=>['pluginOptions'=>['allowClear'=>true]],
             'pluginOptions'=>[
                 'depends'=>['distribucion-centrales_id'],
                 'placeholder'=>'Seleccione',
-                'url'=>Url::to(['lista/getdistribucioncentrales'])
+                'url'=>Url::to(['lista/getdistribucioncentrales2']),
+               // 'initialize' => true
             ]
         ]);
     ?>
@@ -103,7 +106,7 @@ use yii\web\View;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Crear Lista' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Crear Lista' : 'Actualizar Lista', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

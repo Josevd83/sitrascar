@@ -6,6 +6,11 @@ use yii\helpers\Url;
 //use yii\widgets\ActiveForm;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\DepDrop;
+use yii\web\View;
+use app\models\Pagos;
+use kartik\widgets\SwitchInput;
+
+$this->registerCssFile("@web/css/acordeon.css");
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Factura */
@@ -31,7 +36,102 @@ use kartik\widgets\DepDrop;
         ]);
     ?>
 
-    <?= $form->field($model, 'CUENTAS_ID')->textInput(['maxlength' => true]) ?>
+    <?php //= $form->field($model, 'CUENTAS_ID')->textInput(['maxlength' => true]) ?>
+
+    <div id="integration-list">
+        <ul>
+            <?php foreach($modelFlete as $flete): ?>
+                
+                <li>
+                    <a class="expand">
+                        <div class="right-arrow">+</div>
+                        <div class="eleccion">
+                                <?php echo SwitchInput::widget([
+                                'name'=>'PAGOS_ID[]',
+                                 'pluginOptions'=>[
+                                        //'handleWidth'=>60,
+                                        'onText'=>'Seleccionado',
+                                        'offText'=>'Seleccionar',
+                                        'onColor' => 'success',
+                                        //'offColor' => 'danger',
+                                    ]
+                                ]); ?>
+                            </div>
+                        <div>
+                            <h2>Felte : <?= $flete->ID; ?></h2>
+                            <?php //echo $form->field($model, 'PAGOS_ID[]')->widget(SwitchInput::classname(), []); ?>
+
+                            <?php /*echo $form->field($model, 'PAGOS_ID[]')->widget(SwitchInput::classname(), [
+                                'type' => SwitchInput::CHECKBOX
+                            ]); */ ?>
+
+                            
+
+                            <?php /*
+                                echo SwitchInput::widget([
+                                    'name' => 'status_11',
+                                    'pluginOptions' => [
+                                        'size' => 'large',
+                                        'onColor' => 'success',
+                                        'offColor' => 'danger',
+                                    ]
+                                ]);
+                                */
+                            ?>
+                            <span style="margin-left:50px;"><?= $flete->OBSERVACIONES; ?></span>
+                        </div>
+                    </a>
+
+                    <div class="detail">
+                        <div class="col-sm-12 well">
+                            <?php $pagos = Pagos::find(['FLETE_ID'=>$flete->ID])->with('cONCEPTOS')->all(); ?>
+
+                            <?php  //var_dump(count($pagos));die; ?>
+
+                            <?php if($pagos): ?>
+
+                                <?php foreach($pagos as $pago): ?>
+                                    <table>
+                                        <tr>
+                                            <th>Concepto</th>
+                                            <th>Monto</th>
+                                            <th>Estatus del Pago</th>
+                                        </tr>
+                                        <tr>
+                                            <td><?= $pago->NOMBRE ?></td>
+                                            <td><?= $pago->MONTO ?></td>
+                                            <td><?= $pago->ESTATUS ?></td>
+                                        </tr>
+                                    </table>
+                                <?php endforeach; ?>
+
+
+                            <?php else: ?>
+
+                                <p>No existen Pagos asociados al Flete</p>
+
+                            <?php endif; ?>
+
+                        </div>
+                        <!--<div id="left" style="width:15%;float:left;height:100%;">
+                            <div id="sup">
+                                <img src="http://www.ciagent.com/ciagent/cialogo4.png" width="100%" />
+                            </div>
+                        </div>
+                        <div id="right" style="width:85%;float:right;height:100%;padding-left:20px;">
+                            <div id="sup">
+                                <div><span>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</span>
+                                    <br />
+                                    <br /><a href="#">Visit Website</a>
+                                </div>
+                            </div>
+                        </div>-->
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
 
     <?= $form->field($model, 'PAGOS_ID')->textInput(['maxlength' => true]) ?>
 
@@ -52,3 +152,22 @@ use kartik\widgets\DepDrop;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php
+$this->registerJs(
+    '$(function() {
+      $(".expand").on( "click", function() {
+        $(this).next().slideToggle(200);
+        $expand = $(this).find(">:first-child");
+        
+        if($expand.text() == "+") {
+          $expand.text("-");
+        } else {
+          $expand.text("+");
+        }
+      });
+    });',
+    View::POS_READY
+    //'my-button-handler'
+);
+?>

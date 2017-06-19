@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Factura;
 use app\models\Cuentas;
+use app\models\Flete;
 use app\models\FacturaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -67,12 +68,14 @@ class FacturaController extends Controller
     public function actionCreate()
     {
         $model = new Factura();
+        $modelFlete = Flete::find()->with('lISTA','pagos')->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelFlete' => $modelFlete
             ]);
         }
     }
