@@ -307,14 +307,24 @@ class ListaController extends Controller
 
     public function actionOrdenguiasada()
     {
-        $imagen =  Html::img('@web/images/logo-sitrascar.png');
-        $content = $this->renderPartial('_ordenguiasada');
-        $pdf = new Pdf(['cssInline' => '.kv-heading-1{font-size:24px}']); // or new Pdf();
-        $mpdf = $pdf->api; // fetches mpdf api
-        $mpdf->SetHTMLHeader("<div class='encabezado'>$imagen GLOBAL FREIGHT, C.A.</div>");
-        $mpdf->WriteHtml($content); // call mpdf write html
-        echo $mpdf->Output('ordenGuiaSada', 'D');
-        //return $pdf->render();
+        //var_dump(Yii::$app->request->post());die;
+        if (Yii::$app->request->post('lista')){
+
+            $modelLista = Lista::findOne(Yii::$app->request->post('lista'));
+            $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+            //$modelCarga = Carga::find();
+
+
+            $imagen =  Html::img('@web/images/logo-sitrascar.png');
+            $content = $this->renderPartial('_ordenguiasada');
+            $pdf = new Pdf(['cssInline' => '.kv-heading-1{font-size:24px}']); // or new Pdf();
+            $mpdf = $pdf->api; // fetches mpdf api
+            $mpdf->SetHTMLHeader("<div class='encabezado'>$imagen GLOBAL FREIGHT, C.A.</div>");
+            $mpdf->WriteHtml($content); // call mpdf write html
+            echo $mpdf->Output('ordenGuiaSada', 'D');
+            //return $pdf->render();
+        }else{throw new NotFoundHttpException('Solicitud Inválida.');}
+        
     }
 
     //public function actionBuscarchofer($id)
@@ -334,7 +344,7 @@ class ListaController extends Controller
                     foreach ($empresaChoferes as $empresaChofer) {
                         //$chofer = $empresaChofer->cHOFER;
                         $chofer = Chofer::findOne(['ID'=>$empresaChofer->CHOFER_ID]);
-                        echo "<option value='" . $chofer->ID . "'>" . $chofer->PRIMER_NOMBRE . "</option>";
+                        echo "<option value='" . $chofer->ID . "'>" . $chofer->PRIMER_NOMBRE." ".$chofer->PRIMER_APELLIDO . "</option>";
                     }
                 } else {
                     echo "'<option>No hay choferes disponibles</option>'";

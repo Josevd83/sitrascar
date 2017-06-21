@@ -199,7 +199,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format'=>'raw',
                                 'label'=>'Solicitud Permiso INSAI',
                                 //'value'=> Html::a('', ['create'], ['class'=>'fa fa-file-pdf-o','style'=>'width:150px;']),
-                                'value'=> Html::a(Html::img(Url::to('@web/images/pdf-icon.png'),['width'=>'50px']), ['ordenguiasada'],['title'=>'Solicitud Permiso INSAI']),
+                                'value'=> Html::a(Html::img(Url::to('@web/images/pdf-icon.png'),['width'=>'50px']), ['ordenguiasada'],['title'=>'Solicitud Permiso INSAI','data-method'=>'POST','data-params' =>['lista' => $model->ID]]),
                                 //'format'=>['decimal', 2],
                                 'inputContainer' => ['class'=>'col-sm-6'],
                                 'displayOnly'=>true,
