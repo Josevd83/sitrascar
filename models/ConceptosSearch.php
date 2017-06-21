@@ -18,8 +18,8 @@ class ConceptosSearch extends Conceptos
     public function rules()
     {
         return [
-            [['ID', 'NOMBRE', 'SIGNO'], 'integer'],
-            [['FORMULA', 'ESTATUS'], 'safe'],
+            [['ID', 'SIGNO'], 'integer'],
+            [['NOMBRE', 'FORMULA', 'ESTATUS'], 'safe'],
         ];
     }
 
@@ -60,11 +60,11 @@ class ConceptosSearch extends Conceptos
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
-            'NOMBRE' => $this->NOMBRE,
             'SIGNO' => $this->SIGNO,
         ]);
 
-        $query->andFilterWhere(['like', 'FORMULA', $this->FORMULA])
+        $query->andFilterWhere(['like', 'NOMBRE', $this->NOMBRE])
+            ->andFilterWhere(['like', 'FORMULA', $this->FORMULA])
             ->andFilterWhere(['like', 'ESTATUS', $this->ESTATUS]);
 
         return $dataProvider;

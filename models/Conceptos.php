@@ -34,8 +34,7 @@ class Conceptos extends \yii\db\ActiveRecord
         return [
             [['SIGNO'], 'integer'],
             [['ESTATUS'], 'string'],
-            [['NOMBRE'], 'string', 'max' => 30],
-            [['FORMULA'], 'string', 'max' => 200],
+            [['NOMBRE', 'FORMULA'], 'string', 'max' => 200],
         ];
     }
 
