@@ -103,7 +103,7 @@ use yii\web\View;
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Crear Lista' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Crear Lista' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success crear' : 'btn btn-primary crear']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -149,4 +149,26 @@ console.log(choferesSeleccionados);
         });",
         View::POS_READY 
     );
+ ?>
+
+<?php $this->registerJs("
+	$('.atr').hide();
+	$('.atl').hide();
+
+	$('.crear').on('click',function(){
+		var selec = 0;
+		var noselec = 0;
+		$('.selected').each(function(){
+			selec = $('.selected option:not(:selected)').length;
+			noselec = $('.selected option:selected').length;
+		});
+
+		var suma = selec + noselec;
+
+		if(suma > 20){
+			alert('Ha excedido el máximo de choferes seleccionados');
+			return false;
+		}
+	});
+",View::POS_READY);
  ?>

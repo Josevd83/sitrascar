@@ -98,7 +98,7 @@ class ListaController extends Controller
             //var_dump($modelFlete->EMPRESA_CHOFER_ID);die;
             //echo $model->FECHA_CREACION."<br>";
             $fecha = Yii::$app->formatter->asDate($model->FECHA_CREACION, 'Y-MM-dd');
-            //var_dump($fecha);die;
+            //var_dump(Json::decode($modelFlete->EMPRESA_CHOFER_ID));die;
 
             $model->ESTATUS_LISTA = 1;
             $model->FECHA_CREACION = $fecha;
