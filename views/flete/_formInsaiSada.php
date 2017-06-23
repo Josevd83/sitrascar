@@ -28,7 +28,8 @@ $this->registerCss("
                 'removeButton' => false,
                 'options' => ['placeholder' => 'Ingrese Fecha de Emisión'],
                 'pluginOptions' => [
-                    'autoclose'=>true
+                    'autoclose'=>true,
+		    'format' => 'dd-mm-yyyy',
                 ]
             ]); 
         ?>
@@ -157,6 +158,16 @@ $this->registerJs(
 		var fecha = sumaFecha(3,$(this).val());
 		$(this).closest("li").find(".fechaVencimiento").val(fecha);
 	});
+
+	$(function() {
+		$(".fechaEmision").each(function(){
+			if($(this).val()!=""){
+				var fecha = sumaFecha(3,$(this).val());
+				$(this).closest("li").find(".fechaVencimiento").val(fecha);
+			}
+		});
+
+   	});
     ',
     View::POS_READY
     //'my-button-handler'
