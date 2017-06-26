@@ -134,12 +134,24 @@ class FleteController extends Controller
         $modelFlete = Flete::findAll(['LISTA_ID'=>$id]);
         $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
 //$modelDistribucion->FE_REGISTRO = Yii::$app->formatter->asDate($modelDistribucion->FE_REGISTRO, 'Y-MM-dd');
-        return $this->render('pinsaigsada', [
+
+        
+        if ($modelLista->load(Yii::$app->request->post()) /*&& $modelFlete->load(Yii::$app->request->post()) && $modelDistribucion->load(Yii::$app->request->post())*/) {
+            echo "<pre>";
+            var_dump($_POST['Flete']);
+
+            die;
+            return $this->redirect(['view', 'id' => $model->ID]);
+        } else {
+           return $this->render('pinsaigsada', [
                 'modelLista'=>$modelLista,
                 'modelFlete'=>$modelFlete,
                 'modelDistribucion'=>$modelDistribucion,
             ]);
+        }
     }
+
+        
 	public function actionPesaje()
     {
         $id = 1;

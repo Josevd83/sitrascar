@@ -103,6 +103,7 @@ class DistribucionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelCentrales = Centrales::findOne($model->CENTRALES_ID);
 		$cantidadAnterior = $model->CANTIDAD;
 		if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -110,7 +111,7 @@ class DistribucionController extends Controller
         }
 		//if ($model->load(Yii::$app->request->post()) && $model->save()) {
         if ($model->load(Yii::$app->request->post())) {
-			$cantidadAsignada = $model->CANTIDAD;
+	    $cantidadAsignada = $model->CANTIDAD;
             $modelCarga = Carga::findOne(['ID'=>$model->CARGA_ID]);
 		    $pesodistribuido=$modelCarga->PESO_DISTRIBUIDO-$cantidadAnterior;
             $sumaCarga = $pesodistribuido+$cantidadAsignada;
@@ -122,6 +123,7 @@ class DistribucionController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelCentrales' => $modelCentrales,
             ]);
         }
     }

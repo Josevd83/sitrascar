@@ -18,14 +18,14 @@ use Yii;
  * @property Vehiculo $vEHICULO
  * @property Flete[] $fletes
  */
-class EmpresaChofer extends \yii\db\ActiveRecord
+class Empresachofer extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%empresa_chofer}}';
+        return '{{%empresachofer}}';
     }
 
     /**
@@ -34,8 +34,8 @@ class EmpresaChofer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['VEHICULO_ID', 'EMPRESA_ID', 'CHOFER_ID'], 'required'],
             [['VEHICULO_ID', 'EMPRESA_ID', 'CHOFER_ID'], 'integer'],
+            [['EMPRESA_ID', 'CHOFER_ID'], 'required'],
             [['BLOQUEADO'], 'string'],
             [['CHOFER_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Chofer::className(), 'targetAttribute' => ['CHOFER_ID' => 'ID']],
             [['EMPRESA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['EMPRESA_ID' => 'ID']],
@@ -91,10 +91,10 @@ class EmpresaChofer extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
-     * @return EmpresaChoferQuery the active query used by this AR class.
+     * @return EmpresachoferQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new EmpresaChoferQuery(get_called_class());
+        return new EmpresachoferQuery(get_called_class());
     }
 }

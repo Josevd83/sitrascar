@@ -9,7 +9,7 @@ use Yii;
  *
  * @property string $ID
  * @property string $ESTATUS_FLETE_ID
- * @property string $EMPRESA_CHOFER_ID
+ * @property string $EMPRESACHOFER_ID
  * @property string $VEHICULO_ID
  * @property string $LISTA_ID
  * @property string $GUIA_SADA
@@ -41,7 +41,7 @@ use Yii;
  *
  * @property Lista $lISTA
  * @property Vehiculo $vEHICULO
- * @property EmpresaChofer $eMPRESACHOFER
+ * @property Empresachofer $eMPRESACHOFER
  * @property Pagos[] $pagos
  * @property Segflete[] $segfletes
  */
@@ -62,14 +62,14 @@ class Flete extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ESTATUS_FLETE_ID', 'EMPRESA_CHOFER_ID', 'VEHICULO_ID', 'LISTA_ID'], 'required'],
-            [['ESTATUS_FLETE_ID', 'EMPRESA_CHOFER_ID', 'VEHICULO_ID', 'LISTA_ID', 'GUIA_SADA', 'DIAS_VENCE_GS', 'ORDEN_PESO_CARGA', 'ORDEN_CARGA_CVA', 'ORDEN_CARGA_TQ', 'GUIA_RECEP'], 'integer'],
+            [['ESTATUS_FLETE_ID', 'EMPRESACHOFER_ID', 'VEHICULO_ID', 'LISTA_ID'], 'required'],
+            [['ESTATUS_FLETE_ID', 'EMPRESACHOFER_ID', 'VEHICULO_ID', 'LISTA_ID', 'GUIA_SADA', 'DIAS_VENCE_GS', 'ORDEN_PESO_CARGA', 'ORDEN_CARGA_CVA', 'ORDEN_CARGA_TQ', 'GUIA_RECEP'], 'integer'],
             [['FE_EMISION_GS', 'FE_VENCE_GS', 'FE_EMISION_OPC', 'FE_EMISION_OCCVA', 'FE_EMISION_OCTQ', 'FE_IN_BOL', 'FE_PE_TARA_BOL', 'FE_PE_CAR_BOL', 'FE_OUT_BOL', 'FE_IN_CEN', 'FE_PE_CAR_CEN', 'FE_PE_TARA_CEN'], 'safe'],
             [['PESO_TARA_BOL', 'PESO_CAR_BOL', 'PESO_CAR_CEN', 'PE_TARA_CEN', 'PESO_CARGA', 'PESO_DESCARGA', 'FALTANTE'], 'number'],
             [['OBSERVACIONES'], 'string'],
             [['LISTA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Lista::className(), 'targetAttribute' => ['LISTA_ID' => 'ID']],
             [['VEHICULO_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Vehiculo::className(), 'targetAttribute' => ['VEHICULO_ID' => 'ID']],
-            [['EMPRESA_CHOFER_ID'], 'exist', 'skipOnError' => true, 'targetClass' => EmpresaChofer::className(), 'targetAttribute' => ['EMPRESA_CHOFER_ID' => 'ID']],
+            [['EMPRESACHOFER_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Empresachofer::className(), 'targetAttribute' => ['EMPRESACHOFER_ID' => 'ID']],
         ];
     }
 
@@ -81,7 +81,7 @@ class Flete extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'ESTATUS_FLETE_ID' => 'Estatus  Flete  ID',
-            'EMPRESA_CHOFER_ID' => 'Empresa  Chofer  ID',
+            'EMPRESACHOFER_ID' => 'Empresa  Chofer  ID',
             'VEHICULO_ID' => 'Vehiculo  ID',
             'LISTA_ID' => 'Lista  ID',
             'GUIA_SADA' => 'Guia  Sada',
@@ -134,7 +134,7 @@ class Flete extends \yii\db\ActiveRecord
      */
     public function getEMPRESACHOFER()
     {
-        return $this->hasOne(EmpresaChofer::className(), ['ID' => 'EMPRESA_CHOFER_ID']);
+        return $this->hasOne(Empresachofer::className(), ['ID' => 'EMPRESACHOFER_ID']);
     }
 
     /**
@@ -164,8 +164,8 @@ class Flete extends \yii\db\ActiveRecord
 
     public function nomApeChofer()
     {
-        $empresaChofer = EmpresaChofer::findOne($this->EMPRESA_CHOFER_ID);
-        $chofer = Chofer::findOne($empresaChofer->CHOFER_ID);
+        $empresachofer = Empresachofer::findOne($this->EMPRESACHOFER_ID);
+        $chofer = Chofer::findOne($empresachofer->CHOFER_ID);
         return $chofer->PRIMER_NOMBRE." ".$chofer->PRIMER_APELLIDO.", C.I.: ".$chofer->CEDULA;
     }
 }

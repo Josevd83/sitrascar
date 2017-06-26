@@ -48,7 +48,7 @@ class Vehiculo extends \yii\db\ActiveRecord
             [['ESTATUS'], 'string'],
             [['PLACA_CHUTO', 'PLACA_REMOLQUE'], 'string', 'max' => 10],
             [['MARCA', 'MODELO', 'COLOR'], 'string', 'max' => 50],
-            [['SERIAL'], 'string', 'max' => 18],
+            [['SERIAL'], 'string', 'min' => 18, 'max' => 18],
             [['IMG_CARNET'], 'string', 'max' => 100],
             [['EMPRESA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['EMPRESA_ID' => 'ID']],
         ];
@@ -61,18 +61,19 @@ class Vehiculo extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'EMPRESA_ID' => 'Empresa  ID',
-            'PLACA_CHUTO' => 'Placa  Chuto',
+            'EMPRESA_ID' => 'Empresa',
+			'eMPRESA.NOMBRE' => 'Empresa',
+            'PLACA_CHUTO' => 'Placa del Chuto',
             'MARCA' => 'Marca',
             'MODELO' => 'Modelo',
             'SERIAL' => 'Serial',
-            'PLACA_REMOLQUE' => 'Placa  Remolque',
+            'PLACA_REMOLQUE' => 'Placa del Remolque',
             'CAPACIDAD' => 'Capacidad',
             'COLOR' => 'Color',
-            'SROP' => 'Srop',
-            'NRO_PRC' => 'Nro  Prc',
-            'FE_VENCE_PRC' => 'Fe  Vence  Prc',
-            'IMG_CARNET' => 'Img  Carnet',
+            'SROP' => 'SROP',
+            'NRO_PRC' => 'Nro de Poliza de Responsabilidad Civil',
+            'FE_VENCE_PRC' => 'Fecha de Vencimiento de Poliza de R.C.',
+            'IMG_CARNET' => 'Imagen Carnet de Circulacion',
             'ESTATUS' => 'Estatus',
         ];
     }

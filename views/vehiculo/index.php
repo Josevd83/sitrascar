@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\VehiculoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Vehiculos';
+$this->title = 'VEHICULOS';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="vehiculo-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Vehiculo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('NUEVO VEHICULO', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,19 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'ID',
-            'EMPRESA_ID',
+            [
+              'attribute'=> 'EMPRESA_ID',
+              'value'=>'eMPRESA.NOMBRE'
+            ],
             'PLACA_CHUTO',
+            'PLACA_REMOLQUE',
             'MARCA',
-            'MODELO',
+            'ESTATUS',
+            //'MODELO',
             // 'SERIAL',
-            // 'PLACA_REMOLQUE',
+            
             // 'CAPACIDAD',
             // 'COLOR',
             // 'SROP',
             // 'NRO_PRC',
             // 'FE_VENCE_PRC',
             // 'IMG_CARNET',
-            // 'ESTATUS',
+            
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\EmpresaChofer;
+use app\models\Empresachofer;
 
 /**
- * EmpresaChoferSearch represents the model behind the search form about `app\models\EmpresaChofer`.
+ * EmpresachoferSearch represents the model behind the search form about `app\models\Empresachofer`.
  */
-class EmpresaChoferSearch extends EmpresaChofer
+class EmpresachoferSearch extends Empresachofer
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class EmpresaChoferSearch extends EmpresaChofer
      */
     public function search($params)
     {
-        $query = EmpresaChofer::find();
+        $query = Empresachofer::find();
 
         // add conditions that should always apply here
 

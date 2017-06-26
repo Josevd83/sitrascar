@@ -2,17 +2,18 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\Vehiculo */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="vehiculo-form">
+	<?php $var = [0 => 'INACTIVO', 1 => 'DISPONIBLE', 2 => 'ASIGNADO'] ?>
+    <?php $var2 = ArrayHelper::map(app\models\Empresa::find()->all(), 'ID','NOMBRE') ?>
+    <?php $form = ActiveForm::begin(); ?> 
 
-    <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'EMPRESA_ID')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'EMPRESA_ID')->dropDownList($var2, ['prompt' => 'Seleccione la Empresa']) ?>
 
     <?= $form->field($model, 'PLACA_CHUTO')->textInput(['maxlength' => true]) ?>
 
@@ -36,10 +37,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'IMG_CARNET')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ESTATUS')->dropDownList([ '0', '1', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'ESTATUS')->dropDownList($var, ['prompt' => 'Seleccione Estatus']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'NUEVO VEHICULO' : 'ACTUALIZAR VEHICULO', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

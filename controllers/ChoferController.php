@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Chofer;
+use app\models\Empresa;
+use app\models\Empresachofer;
 use app\models\ChoferSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -11,6 +13,9 @@ use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 use app\models\FormUpload;
 use yii\web\UploadedFile;
+use yii\web\Response;
+use yii\helpers\Html;
+use kartik\widgets\Growl;
 /**
  * ChoferController implements the CRUD actions for Chofer model.
  */
@@ -53,8 +58,11 @@ class ChoferController extends Controller
      */
     public function actionView($id)
     {
+        $model = Chofer::findOne($id);
+        $modelEmpresachofer = Empresachofer::findOne([$model->ID]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'modelEmpresachofer' => $modelEmpresachofer
         ]);
     }
 
@@ -65,7 +73,7 @@ class ChoferController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Chofer();
+        /*$model = new Chofer();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -73,7 +81,45 @@ class ChoferController extends Controller
             return $this->render('create', [
                 'model' => $model,
             ]);
+        }*/
+        $model = new Chofer();
+        $modelEmpresachofer = new Empresachofer();
+
+        if ($model->load(Yii::$app->request->post()) && $modelEmpresachofer->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            //$file = $model->file;
+            $model->file->saveAs('certificados/' . $model->file->baseName . '.' . $model->file->extension);
+            $model->IMG_CERTIFICADO = 'certificados/' . $model->file->baseName . '.' . $model->file->extension;
+            //var_dump($model);die;
+            //if($model->save()){
+                $model->save(false);
+                //var_dump($model->ID);die;
+                $modelEmpresachofer->CHOFER_ID = $model->ID;
+                //var_dump($modelEmpresachofer->EMPRESA_ID);die;
+                $modelEmpresachofer->EMPRESA_ID = $modelEmpresachofer->EMPRESA_ID;
+
+                $modelEmpresachofer->save();
+           // 
+               
+
+            /*Yii::$app->getSession()->setFlash('success', [
+                'type' => Growl::TYPE_SUCCESS,
+                'icon' => 'fa fa-users',
+                'message' => Html::encode('La Lista ha sido creada exitósamente'),
+                'title' => Html::encode('Resultado'),
+                'showSeparator' => true,
+                    
+            ]);*/
+            return $this->redirect(['view', 'id' => $model->ID]);
+            
+            //}
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'modelEmpresachofer' => $modelEmpresachofer,
+            ]);
         }
+    
     }
 
     /**
@@ -85,15 +131,53 @@ class ChoferController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $actual_image = $model->IMG_CERTIFICADO;
+        $modelEmpresachofer = Empresachofer::findOne(['CHOFER_ID'=>$model->ID]);
+                
+        if ($model->load(Yii::$app->request->post())&& $modelEmpresachofer->load(Yii::$app->request->post())){
+            $image= UploadedFile::getInstance($model, 'file');
+            if(!empty($image) && $image->size !== 0) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                $model->file->saveAs('certificados/' . $model->file->baseName . '.' . $model->file->extension);
+                $model->IMG_CERTIFICADO = 'certificados/' . $model->file->baseName . '.' . $model->file->extension;
+            }else
+                $model->IMG_CERTIFICADO = $actual_image;
+            $model->save(false); 
+            $modelEmpresachofer->CHOFER_ID = $model->ID;
+            $modelEmpresachofer->EMPRESA_ID = $modelEmpresachofer->EMPRESA_ID;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $modelEmpresachofer->save();
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelEmpresachofer' => $modelEmpresachofer,
             ]);
         }
     }
+    
+    public function actionUpload()
+ {
+  
+  $model = new FormUpload;
+  $msg = null;
+  
+  if ($model->load(Yii::$app->request->post()))
+  {
+   $model->file = UploadedFile::getInstances($model, 'file');
+   //$model->file = UploadedFile::getInstance($model, 'file');
+   //$file = $model->file;
+   //$file->saveAs(...);
+   
+   if ($model->file && $model->validate()) {
+    foreach ($model->file as $file) {
+     $file->saveAs('archivos/' . $file->baseName . '.' . $file->extension);
+     $msg = "<p><strong class='label label-info'>Enhorabuena, subida realizada con éxito</strong></p>";
+    }
+   }
+  }
+  return $this->render("chofer", ["model" => $model, "msg" => $msg]);
+ }
 
     /**
      * Deletes an existing Chofer model.
@@ -157,5 +241,5 @@ class ChoferController extends Controller
     // return the pdf output as per the destination setting
         return $pdf->render(); 
     }
-   
+    
 }

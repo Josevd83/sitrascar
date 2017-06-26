@@ -40,6 +40,7 @@ class Cuentas extends \yii\db\ActiveRecord
             [['ESTATUS'], 'string'],
             [['BANCO'], 'string', 'max' => 100],
             [['TIPO', 'CEDULA_RIF'], 'string', 'max' => 10],
+            [['NRO_CUENTA'], 'string', 'min' => 20, 'max' => 20],
             [['TITULAR'], 'string', 'max' => 150],
             [['EMPRESA_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Empresa::className(), 'targetAttribute' => ['EMPRESA_ID' => 'ID']],
         ];

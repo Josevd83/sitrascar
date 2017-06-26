@@ -18,8 +18,8 @@ class VehiculoSearch extends Vehiculo
     public function rules()
     {
         return [
-            [['ID', 'EMPRESA_ID', 'CAPACIDAD', 'SROP', 'NRO_PRC'], 'integer'],
-            [['PLACA_CHUTO', 'MARCA', 'MODELO', 'SERIAL', 'PLACA_REMOLQUE', 'COLOR', 'FE_VENCE_PRC', 'IMG_CARNET', 'ESTATUS'], 'safe'],
+            [['ID', 'CAPACIDAD', 'SROP', 'NRO_PRC'], 'integer'],
+            [['PLACA_CHUTO', 'MARCA', 'MODELO', 'SERIAL', 'PLACA_REMOLQUE', 'COLOR', 'FE_VENCE_PRC', 'IMG_CARNET', 'ESTATUS', 'EMPRESA_ID'], 'safe'],
         ];
     }
 
@@ -56,11 +56,11 @@ class VehiculoSearch extends Vehiculo
             // $query->where('0=1');
             return $dataProvider;
         }
+		$query->joinWith('eMPRESA');
 
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
-            'EMPRESA_ID' => $this->EMPRESA_ID,
             'CAPACIDAD' => $this->CAPACIDAD,
             'SROP' => $this->SROP,
             'NRO_PRC' => $this->NRO_PRC,
@@ -74,7 +74,8 @@ class VehiculoSearch extends Vehiculo
             ->andFilterWhere(['like', 'PLACA_REMOLQUE', $this->PLACA_REMOLQUE])
             ->andFilterWhere(['like', 'COLOR', $this->COLOR])
             ->andFilterWhere(['like', 'IMG_CARNET', $this->IMG_CARNET])
-            ->andFilterWhere(['like', 'ESTATUS', $this->ESTATUS]);
+            ->andFilterWhere(['like', 'ESTATUS', $this->ESTATUS])
+			->andFilterWhere(['like', 'eMPRESA.NOMBRE', $this->EMPRESA_ID]);
 
         return $dataProvider;
     }

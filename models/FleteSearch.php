@@ -18,7 +18,7 @@ class FleteSearch extends Flete
     public function rules()
     {
         return [
-            [['ID', 'ESTATUS_FLETE_ID', 'EMPRESA_CHOFER_ID', 'VEHICULO_ID', 'LISTA_ID', 'GUIA_SADA', 'DIAS_VENCE_GS', 'ORDEN_PESO_CARGA', 'ORDEN_CARGA_CVA', 'ORDEN_CARGA_TQ', 'GUIA_RECEP'], 'integer'],
+            [['ID', 'ESTATUS_FLETE_ID', 'EMPRESACHOFER_ID', 'VEHICULO_ID', 'LISTA_ID', 'GUIA_SADA', 'DIAS_VENCE_GS', 'ORDEN_PESO_CARGA', 'ORDEN_CARGA_CVA', 'ORDEN_CARGA_TQ', 'GUIA_RECEP'], 'integer'],
             [['FE_EMISION_GS', 'FE_VENCE_GS', 'FE_EMISION_OPC', 'FE_EMISION_OCCVA', 'FE_EMISION_OCTQ', 'FE_IN_BOL', 'FE_PE_TARA_BOL', 'FE_PE_CAR_BOL', 'FE_OUT_BOL', 'FE_IN_CEN', 'FE_PE_CAR_CEN', 'FE_PE_TARA_CEN', 'OBSERVACIONES'], 'safe'],
             [['PESO_TARA_BOL', 'PESO_CAR_BOL', 'PESO_CAR_CEN', 'PE_TARA_CEN', 'PESO_CARGA', 'PESO_DESCARGA', 'FALTANTE'], 'number'],
         ];
@@ -62,7 +62,7 @@ class FleteSearch extends Flete
         $query->andFilterWhere([
             'ID' => $this->ID,
             'ESTATUS_FLETE_ID' => $this->ESTATUS_FLETE_ID,
-            'EMPRESA_CHOFER_ID' => $this->EMPRESA_CHOFER_ID,
+            'EMPRESACHOFER_ID' => $this->EMPRESACHOFER_ID,
             'VEHICULO_ID' => $this->VEHICULO_ID,
             'LISTA_ID' => $this->LISTA_ID,
             'GUIA_SADA' => $this->GUIA_SADA,

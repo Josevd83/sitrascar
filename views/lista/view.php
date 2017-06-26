@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 [
                                                     'attribute'=>'ESTATUS_LISTA',
                                                     'label'=>'Estatus de la Lista',
-                                                    'value'=>$model->ESTATUS_LISTA,
+                                                    'value'=>($model->ESTATUS_LISTA == 1)?'Activo':'Inactivo',
                                                     //'value'=>$model->solicitante->CORREO_ELECTRONICO,
                                                     'displayOnly'=>true,
                                                     'valueColOptions'=>['style'=>'width:30%']

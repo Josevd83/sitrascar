@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Chofer */
@@ -9,9 +10,16 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="chofer-form">
-	<?php $var = [0 => 'INACTIVO', 1 => 'ACTIVO'] ?>
-    <?php $form = ActiveForm::begin(); ?>
-
+    <?php $var = [0 => 'INACTIVO', 1 => 'ACTIVO'] ?>
+    <?php $var2 = ArrayHelper::map(app\models\Empresa::find()->all(), 'ID','NOMBRE') ?>
+    <?php $form = ActiveForm::begin([
+     //"method" => "post",
+     //"enableClientValidation" => true,
+     "options" => ["enctype" => "multipart/form-data"],
+     ]); ?>
+    
+    <?php // echo $form->field($empresachofer, 'EMPRESA_ID')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($modelEmpresachofer, 'EMPRESA_ID')->dropDownList($var2, ['prompt' => 'Seleccione' ]) ?>
     <?= $form->field($model, 'CEDULA')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'PRIMER_NOMBRE')->textInput(['maxlength' => true]) ?>
@@ -40,7 +48,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'IMG_LICENCIA')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'IMG_CERTIFICADO')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'IMG_CERTIFICADO')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'file')->fileInput() ?>
+
 
     <?= $form->field($model, 'ESTATUS')->dropDownList($var, ['prompt' => 'Seleccione']) ?>
 

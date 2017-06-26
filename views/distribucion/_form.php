@@ -10,6 +10,11 @@ use kartik\widgets\DepDrop;
 /* @var $this yii\web\View */
 /* @var $model app\models\Distribucion */
 /* @var $form yii\widgets\ActiveForm */
+if (isset($modelCentrales))
+    $central =[$modelCentrales->ID => $modelCentrales->NOMBRE];
+else 
+    $central =[];
+        
 ?>
 
 <div class="distribucion-form">
@@ -22,6 +27,7 @@ use kartik\widgets\DepDrop;
     <?php
         echo $form->field($model, 'CENTRALES_ID')->widget(DepDrop::classname(), [
             'options'=>['id'=>'subcat-id'],
+            'data'=>$central,
             'pluginOptions'=>[
                 'depends'=>['distribucion-carga_id'],
                 'placeholder'=>'Seleccione',
@@ -69,11 +75,11 @@ use kartik\widgets\DepDrop;
 
     <?= $form->field($model, 'CODIGO_SICA')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'CANT_DESPACHADA')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'CANT_DESPACHADA')->textInput(['disabled' => true]) ?>
 
     <?= $form->field($model, 'OBSERVACIONES')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'FE_REGISTRO')->textInput() ?>
+    <?= $form->field($model, 'FE_REGISTRO')->textInput(['disabled' => true]) ?>
 
     <?= $form->field($model, 'ESTATUS_DIS')->textInput(['maxlength' => true]) ?>
 

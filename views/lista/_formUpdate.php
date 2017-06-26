@@ -85,7 +85,7 @@ use yii\web\View;
 
         echo maksyutin\duallistbox\Widget::widget([
             'model' => $modelFlete,
-            'attribute' => 'EMPRESA_CHOFER_ID',
+            'attribute' => 'EMPRESACHOFER_ID',
             //'attribute' => 'ID',
             
             'title' => 'Título',

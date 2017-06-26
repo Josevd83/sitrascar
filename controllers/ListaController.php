@@ -5,7 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Lista;
 use app\models\Chofer;
-use app\models\EmpresaChofer;
+use app\models\Empresachofer;
 use app\models\ListaSearch;
 use app\models\Distribucion;
 use app\models\Flete;
@@ -105,23 +105,23 @@ class ListaController extends Controller
             #$model->FECHA_CREACION = new Expression('now()');
             //echo $model->FECHA_CREACION; die;
             if($model->save()){
-                $choferes = Json::decode($modelFlete->EMPRESA_CHOFER_ID);
+                $choferes = Json::decode($modelFlete->EMPRESACHOFER_ID);
                 //var_dump($prueba);die;
                 foreach($choferes as $chofer)
                 {
                     $modelFlete = new Flete();
                     //var_dump($flete)."<hr>";
                     //echo $chofer."<hr>";
-                    $modelEmpresaChofer = EmpresaChofer::findOne(['CHOFER_ID'=>$chofer]);
+                    $modelEmpresachofer = Empresachofer::findOne(['CHOFER_ID'=>$chofer]);
 
                     $modelFlete->ESTATUS_FLETE_ID = 1;
-                    $modelFlete->EMPRESA_CHOFER_ID = $modelEmpresaChofer->ID;
-                    $modelFlete->VEHICULO_ID = $modelEmpresaChofer->VEHICULO_ID;
+                    $modelFlete->EMPRESACHOFER_ID = $modelEmpresachofer->ID;
+                    $modelFlete->VEHICULO_ID = $modelEmpresachofer->VEHICULO_ID;
                     $modelFlete->LISTA_ID = $model->ID;
 
                     if($modelFlete->save()){
-                        $modelEmpresaChofer->BLOQUEADO = "1";
-                        $modelEmpresaChofer->save();
+                        $modelEmpresachofer->BLOQUEADO = "1";
+                        $modelEmpresachofer->save();
                     }
 
                 }
@@ -215,7 +215,7 @@ class ListaController extends Controller
                 $cat_id = $parents[0];
                 #$out = self::getSubCatList($cat_id); 
                 ##$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID as id','OBSERVACIONES as name'])->asArray()->all(); 
-                $out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
+                $out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', 'CANTIDAD', 'CANTIDAD_DESPACHADA'])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
                 //$out = ArrayHelper::map(Distribucion::find()->all(), 'ID', 'OBSERVACIONES'); 
                 //$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID','OBSERVACIONES'])->asArray(); 
                 /*echo "<pre>";
@@ -241,7 +241,7 @@ class ListaController extends Controller
                 $cat_id = $parents[0];
                 #$out = self::getSubCatList($cat_id); 
                 ##$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID as id','OBSERVACIONES as name'])->asArray()->all(); 
-                $out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
+                $out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', ['CANTIDAD' => 'CANTIDAD_DESPACHADA']])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
                 //$out = ArrayHelper::map(Distribucion::find()->all(), 'ID', 'OBSERVACIONES'); 
                 //$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID','OBSERVACIONES'])->asArray(); 
                 /*echo "<pre>";
@@ -337,13 +337,13 @@ class ListaController extends Controller
         if ($id_empresa != null) {
             //$choferes = Chofer::find(['EMPRESA_ID'=>$id_empresa])->with('empresaChofers')->all();
             //$choferes = EmpresaChofer::find(['EMPRESA_ID'=>$id_empresa])->select(['chofer.ID as ID', 'chofer.PRIMER_NOMBRE as PRIMER_NOMBRE'])->with('cHOFER')->all();
-            $empresaChoferes = EmpresaChofer::findAll(['EMPRESA_ID'=>$id_empresa, 'BLOQUEADO'=>'0']);
+            $empresachoferes = Empresachofer::findAll(['EMPRESA_ID'=>$id_empresa, 'BLOQUEADO'=>'0']);
             //var_dump($empresaChoferes);die;
             //echo count($empresaChoferes);die;
-            if (count($empresaChoferes) > 0) {
-                    foreach ($empresaChoferes as $empresaChofer) {
+            if (count($empresachoferes) > 0) {
+                    foreach ($empresachoferes as $empresachofer) {
                         //$chofer = $empresaChofer->cHOFER;
-                        $chofer = Chofer::findOne(['ID'=>$empresaChofer->CHOFER_ID]);
+                        $chofer = Chofer::findOne(['ID'=>$empresachofer->CHOFER_ID]);
                         echo "<option value='" . $chofer->ID . "'>" . $chofer->PRIMER_NOMBRE." ".$chofer->PRIMER_APELLIDO . "</option>";
                     }
                 } else {

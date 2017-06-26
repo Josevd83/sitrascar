@@ -3,11 +3,11 @@
 namespace app\models;
 
 /**
- * This is the ActiveQuery class for [[EmpresaChofer]].
+ * This is the ActiveQuery class for [[Empresachofer]].
  *
- * @see EmpresaChofer
+ * @see Empresachofer
  */
-class EmpresaChoferQuery extends \yii\db\ActiveQuery
+class EmpresachoferQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class EmpresaChoferQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return EmpresaChofer[]|array
+     * @return Empresachofer[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class EmpresaChoferQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return EmpresaChofer|array|null
+     * @return Empresachofer|array|null
      */
     public function one($db = null)
     {

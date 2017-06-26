@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\EmpresaChofer;
-use app\models\EmpresaChoferSearch;
+use app\models\Empresachofer;
+use app\models\EmpresachoferSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EmpresaChoferController implements the CRUD actions for EmpresaChofer model.
+ * EmpresachoferController implements the CRUD actions for Empresachofer model.
  */
-class EmpresaChoferController extends Controller
+class EmpresachoferController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class EmpresaChoferController extends Controller
     }
 
     /**
-     * Lists all EmpresaChofer models.
+     * Lists all Empresachofer models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EmpresaChoferSearch();
+        $searchModel = new EmpresachoferSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class EmpresaChoferController extends Controller
     }
 
     /**
-     * Displays a single EmpresaChofer model.
+     * Displays a single Empresachofer model.
      * @param string $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class EmpresaChoferController extends Controller
     }
 
     /**
-     * Creates a new EmpresaChofer model.
+     * Creates a new Empresachofer model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new EmpresaChofer();
+        $model = new Empresachofer();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -75,7 +75,7 @@ class EmpresaChoferController extends Controller
     }
 
     /**
-     * Updates an existing EmpresaChofer model.
+     * Updates an existing Empresachofer model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -94,7 +94,7 @@ class EmpresaChoferController extends Controller
     }
 
     /**
-     * Deletes an existing EmpresaChofer model.
+     * Deletes an existing Empresachofer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -107,15 +107,15 @@ class EmpresaChoferController extends Controller
     }
 
     /**
-     * Finds the EmpresaChofer model based on its primary key value.
+     * Finds the Empresachofer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return EmpresaChofer the loaded model
+     * @return Empresachofer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EmpresaChofer::findOne($id)) !== null) {
+        if (($model = Empresachofer::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
