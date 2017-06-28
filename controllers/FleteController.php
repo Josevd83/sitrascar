@@ -12,6 +12,8 @@ use app\models\FleteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\widgets\Growl;
+use yii\helpers\Html;
 
 /**
  * FleteController implements the CRUD actions for Flete model.
@@ -136,12 +138,51 @@ class FleteController extends Controller
 //$modelDistribucion->FE_REGISTRO = Yii::$app->formatter->asDate($modelDistribucion->FE_REGISTRO, 'Y-MM-dd');
 
         
-        if ($modelLista->load(Yii::$app->request->post()) /*&& $modelFlete->load(Yii::$app->request->post()) && $modelDistribucion->load(Yii::$app->request->post())*/) {
-            echo "<pre>";
-            var_dump($_POST['Flete']);
+        if ($modelLista->load(Yii::$app->request->post())  && $modelDistribucion->load(Yii::$app->request->post())) {
 
-            die;
-            return $this->redirect(['view', 'id' => $model->ID]);
+            $fletes = Yii::$app->request->post("Flete");
+            //echo "<pre>";
+            //var_dump(Yii::$app->request->post("Flete"));
+            //die;
+            foreach ($fletes as $flete) {
+                //$fecha = Yii::$app->formatter->asDate($model->FECHA_CREACION, 'Y-MM-dd');
+
+                $actualizaFlete = Flete::findOne($flete['ID']);
+                $actualizaFlete->GUIA_SADA = $flete['GUIA_SADA'];
+                $actualizaFlete->FE_EMISION_GS = Yii::$app->formatter->asDate($flete['FE_EMISION_GS'], 'Y-MM-dd');
+                $actualizaFlete->DIAS_VENCE_GS = $flete['DIAS_VENCE_GS'];
+                $actualizaFlete->ORDEN_PESO_CARGA = $flete['ORDEN_PESO_CARGA'];
+                $actualizaFlete->FE_EMISION_OPC = Yii::$app->formatter->asDate($flete['FE_EMISION_OPC'], 'Y-MM-dd');
+                $actualizaFlete->save();
+            }
+
+	//var_dump($modelLista->ID);die;
+	  $modelLista = Lista::findOne($modelLista->ID);
+          $modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
+          $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+
+	  Yii::$app->getSession()->setFlash('success', [
+                'type' => Growl::TYPE_SUCCESS,
+                'icon' => 'fa fa-users',
+                'message' => Html::encode('Actualización realizada exitósamente'),
+                'title' => Html::encode('Resultado'),
+                'showSeparator' => true,
+                    
+          ]);
+
+            //echo "<pre>";
+
+            //var_dump($modelDistribucion);
+            //var_dump(Yii::$app->request->post("Flete"));
+            //var_dump($_POST['Flete']);
+
+            //die;
+            #return $this->redirect(['view', 'id' => $model->ID]);
+            return $this->render('pinsaigsada', [
+                'modelLista'=>$modelLista,
+                'modelFlete'=>$modelFlete,
+                'modelDistribucion'=>$modelDistribucion,
+            ]);
         } else {
            return $this->render('pinsaigsada', [
                 'modelLista'=>$modelLista,

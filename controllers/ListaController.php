@@ -214,7 +214,8 @@ class ListaController extends Controller
             if ($parents != null) {
                 $cat_id = $parents[0];
                 #$out = self::getSubCatList($cat_id); 
-                ##$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID as id','OBSERVACIONES as name'])->asArray()->all(); 
+                ##$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID as id','OBSERVACIONES as name'])->asArray()->all();
+
                 $out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', 'CANTIDAD', 'CANTIDAD_DESPACHADA'])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
                 //$out = ArrayHelper::map(Distribucion::find()->all(), 'ID', 'OBSERVACIONES'); 
                 //$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID','OBSERVACIONES'])->asArray(); 

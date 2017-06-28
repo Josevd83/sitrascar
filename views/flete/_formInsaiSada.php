@@ -17,6 +17,8 @@ $this->registerCss("
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($modelLista, "ID")->hiddenInput()->label(false) ?>
+
     <?= $form->field($modelDistribucion, 'PERMISO_INSAI')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
@@ -42,6 +44,7 @@ $this->registerCss("
         <ul>
             <?php foreach($modelFlete as $index => $flete): ?>
                 <?php //var_dump($flete->GUIA_SADA);die; ?>
+                <?= $form->field($flete, "[$index]ID")->hiddenInput()->label(false) ?>
                 <li>
                     <?= (!empty($flete->GUIA_SADA))? '<div class="left-status"><span class="label label-success">Guia Sada</span></div>': '<div class="left-status"><span class="label label-danger">Guia Sada</span></div>' ?>
                     
@@ -119,6 +122,7 @@ $this->registerCss("
                             <?= $form->field($flete, "[$index]ORDEN_PESO_CARGA", ['inputOptions'=>['placeholder'=>$flete->getAttributeLabel('ORDEN_PESO_CARGA')]])->textInput(['maxlength' => true]); ?>
                         </div>
                         <div class="col-sm-2">
+                            <?php if($flete->FE_EMISION_OPC)$flete->FE_EMISION_OPC = Yii::$app->formatter->asDate($flete->FE_EMISION_OPC, 'dd-MM-Y'); ?>
                             <?php echo '<label class="control-label">Fecha Orden PC</label>'; ?>
                             <?php echo DatePicker::widget([
                                     'model' => $flete, 
