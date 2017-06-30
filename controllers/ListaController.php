@@ -215,8 +215,24 @@ class ListaController extends Controller
                 $cat_id = $parents[0];
                 #$out = self::getSubCatList($cat_id); 
                 ##$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID as id','OBSERVACIONES as name'])->asArray()->all();
+///////////////////////////////////////
+$parametros = [':CENTRALES_ID' => $cat_id];
+		
+$consulta = Yii::$app->db->createCommand('SELECT ID as id, OBSERVACIONES as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
+//$ids = [];
+//var_dump($consulta);die;
+//foreach($consulta as  $valor){
+//echo $valor['ID']."<br>";
+//	$ids[] = $valor['ID'];
+//}
 
-                $out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', 'CANTIDAD', 'CANTIDAD_DESPACHADA'])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
+//var_dump($ids);die;
+//$out = Distribucion::find($ids)->select(['ID as id','OBSERVACIONES as name'])->asArray()->all();
+$out = $consulta;
+
+                ##$out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', 'CANTIDAD', 'CANTIDAD_DESPACHADA'])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all();
+///////////////////////////////////////
+
                 //$out = ArrayHelper::map(Distribucion::find()->all(), 'ID', 'OBSERVACIONES'); 
                 //$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID','OBSERVACIONES'])->asArray(); 
                 /*echo "<pre>";
@@ -240,19 +256,13 @@ class ListaController extends Controller
             $parents = $_POST['depdrop_parents'];
             if ($parents != null) {
                 $cat_id = $parents[0];
-                #$out = self::getSubCatList($cat_id); 
-                ##$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID as id','OBSERVACIONES as name'])->asArray()->all(); 
-                $out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', ['CANTIDAD' => 'CANTIDAD_DESPACHADA']])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
-                //$out = ArrayHelper::map(Distribucion::find()->all(), 'ID', 'OBSERVACIONES'); 
-                //$out = Distribucion::findAll(['CENTRALES_ID'=>$cat_id])->select(['ID','OBSERVACIONES'])->asArray(); 
-                /*echo "<pre>";
-                var_dump($out);die;*/
-                // the getSubCatList function will query the database based on the
-                // cat_id and return an array like below:
-                // [
-                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
-                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
-                // ]
+
+                #$out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', ['CANTIDAD' => 'CANTIDAD_DESPACHADA']])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
+$parametros = [':CENTRALES_ID' => $cat_id];
+		$consulta = Yii::$app->db->createCommand('SELECT ID as id, OBSERVACIONES as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
+
+		$out = $consulta;
+
                 echo Json::encode(['output'=>$out, 'selected'=>'']);
                 return;
             }
