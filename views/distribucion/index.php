@@ -24,21 +24,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID',
-            'CARGA_ID',
-            [
-              'attribute'=> 'CENTRALES_ID',
-              'value'=>'cENTRALES.NOMBRE'
-            ],
-            'CANTIDAD',
+            'DESCRIPCION',
+            //'CARGA_ID',
             'FE_ASIGNACION',
+            'CANTIDAD',
+            'CANT_DESPACHADA',
+            
             // 'CANT_FLETES',
             // 'PERMISO_INSAI',
             // 'FE_EMISION_PI',
             // 'DIAS_VENCE_PI',
             // 'FE_VENCE_PI',
             // 'CODIGO_SICA',
-            // 'CANT_DESPACHADA',
+
             // 'OBSERVACIONES:ntext',
             // 'FE_REGISTRO',
             // 'ESTATUS_DIS',

@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('ACTUALIZAR', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('REGISTRAR CUENTA', ['cuentas/create', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('BORRAR', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'TELEFONO_1',
             'TELEFONO_2',
             'CORREO',
-            'ESTATUS',
+            ['label'=>'Estatus','value'=>($model->ESTATUS == 1)?'ACTIVA':'INACTIVA'],
         ],
     ]) ?>
 

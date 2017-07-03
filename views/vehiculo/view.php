@@ -9,6 +9,9 @@ use yii\widgets\DetailView;
 $this->title = $model->ID;
 $this->params['breadcrumbs'][] = ['label' => 'Vehiculos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+if($model->ESTATUS == 0) $estatus = 'INACTIVO';
+if($model->ESTATUS == 1) $estatus = 'DISPONIBLE';
+if($model->ESTATUS == 2) $estatus = 'ASIGNADO';
 ?>
 <div class="vehiculo-view">
 
@@ -41,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'NRO_PRC',
             'FE_VENCE_PRC',
             'IMG_CARNET',
-            'ESTATUS',
+            ['label'=>'Estatus','value'=>$estatus],
         ],
     ]) ?>
 

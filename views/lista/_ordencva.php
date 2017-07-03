@@ -56,8 +56,8 @@ table td{
 </style>
 
 <div class="espacio-encabezado"></div>
-
-<p class="texto-derecha">Puerto Cabello, 29 de Abril de 2017</p>
+<?php $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");?>
+<p class="texto-derecha">Puerto Cabello, <?= date('d') ?> de <?= $meses[date('n')-1] ?> de <?= date('Y') ?></p>
 
 <p class="interlineado-1_15 texto-izquierda">
 CUSPAL C.A.<br />
@@ -84,129 +84,27 @@ PRESENTE.
         <th>C.I.</th>
         <th>Placa<br />Chuto</th>
     </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-        <td>12.934.645</td>
-        <td>A14AZ9D</td>
-    </tr>
+    <?php $contador = 1; ?>
+    <?php foreach($modelFlete as $flete): ?>
+    <?php
+		$nombre1 = $flete->eMPRESACHOFER->cHOFER->PRIMER_NOMBRE;
+		$nombre2 = $flete->eMPRESACHOFER->cHOFER->SEGUNDO_NOMBRE;
+		$apellido1 = $flete->eMPRESACHOFER->cHOFER->PRIMER_APELLIDO;
+		$apellido2 = $flete->eMPRESACHOFER->cHOFER->SEGUNDO_APELLIDO;
+		$cedula = $flete->eMPRESACHOFER->cHOFER->CEDULA;
+		$placaChuto = $flete->eMPRESACHOFER->vEHICULO->PLACA_CHUTO;
+	?>
+	<tr>
+   	  <td class="datos"><?= $contador ?></td>
+    	<td class="datos"><?= $nombre1." ".$nombre2." ".$apellido1." ".$apellido2 ?></td>
+    	<td class="datos"><?= $cedula ?></td>
+    	<td class="datos"><?= $placaChuto ?></td>
+	</tr>
+    <?php $contador ++; ?>
+    <?php endforeach; ?>
 </table>
 
-<p>Listado No. 3</p>
+<p>Listado No. <?= $modelLista->ID ?></p>
 
 <p class="texto-derecha">Atentamente,</p>
 

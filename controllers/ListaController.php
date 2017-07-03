@@ -218,7 +218,7 @@ class ListaController extends Controller
 ///////////////////////////////////////
 $parametros = [':CENTRALES_ID' => $cat_id];
 		
-$consulta = Yii::$app->db->createCommand('SELECT ID as id, OBSERVACIONES as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
+$consulta = Yii::$app->db->createCommand('SELECT ID as id, DESCRIPCION as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
 //$ids = [];
 //var_dump($consulta);die;
 //foreach($consulta as  $valor){
@@ -259,7 +259,7 @@ $out = $consulta;
 
                 #$out = Distribucion::find()->select(['ID as id','OBSERVACIONES as name'])->where(['CENTRALES_ID'=>$cat_id])->andWhere(['>', ['CANTIDAD' => 'CANTIDAD_DESPACHADA']])->andWhere(['not', ['CODIGO_SICA' => null]])->asArray()->all(); 
 $parametros = [':CENTRALES_ID' => $cat_id];
-		$consulta = Yii::$app->db->createCommand('SELECT ID as id, OBSERVACIONES as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
+		$consulta = Yii::$app->db->createCommand('SELECT ID as id, DESCRIPCION as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
 
 		$out = $consulta;
 
@@ -272,38 +272,11 @@ $parametros = [':CENTRALES_ID' => $cat_id];
 
     public function actionOrdencva()
     {
-       /* $model = Chofer::findOne(1);
-        $content = $this->renderPartial('_ordencva',['model'=>$model]);
-
-        $pdf = new Pdf([
-        // set to use core fonts only
-            //'mode' => Pdf::MODE_CORE, 
-            // A4 paper format
-            'format' => Pdf::FORMAT_A4, 
-            // portrait orientation
-            'orientation' => Pdf::ORIENT_PORTRAIT, 
-            // stream to browser inline
-            'destination' => Pdf::DEST_BROWSER, 
-            // your html content input
-            'content' => $content,  
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting 
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-            // any css to be embedded if required
-            'cssInline' => '.kv-heading-1{font-size:18px}', 
-             // set mPDF properties on the fly
-            'options' => ['title' => 'Reporte Sitrascar'],
-             // call mPDF methods on the fly
-            'methods' => [ 
-                'SetHeader'=>['Orden CVA'], 
-                'SetFooter'=>['{PAGENO}'],
-            ]
-        ]);
-    
-    // return the pdf output as per the destination setting
-        return $pdf->render(); */
+       $modelLista = Lista::findOne(Yii::$app->request->post('lista'));
+       $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+       $modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
         $imagen =  Html::img('@web/images/logo-sitrascar.png');
-        $content = $this->renderPartial('_ordencva');
+        $content = $this->renderPartial('_ordencva', ['modelLista'=>$modelLista, 'modelDistribucion'=>$modelDistribucion, 'modelFlete'=>$modelFlete]);
         //return $content;
         //$pdf = Yii::$app->pdf; // or new Pdf();
         $pdf = new Pdf(['cssInline' => '.kv-heading-1{font-size:24px}']); // or new Pdf();
@@ -323,16 +296,40 @@ $parametros = [':CENTRALES_ID' => $cat_id];
 
             $modelLista = Lista::findOne(Yii::$app->request->post('lista'));
             $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+            $modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
             //$modelCarga = Carga::find();
 
 
             $imagen =  Html::img('@web/images/logo-sitrascar.png');
-            $content = $this->renderPartial('_ordenguiasada');
+            $content = $this->renderPartial('_ordenguiasada',['modelLista'=>$modelLista, 'modelDistribucion'=>$modelDistribucion, 'modelFlete'=>$modelFlete]);
             $pdf = new Pdf(['cssInline' => '.kv-heading-1{font-size:24px}']); // or new Pdf();
             $mpdf = $pdf->api; // fetches mpdf api
             $mpdf->SetHTMLHeader("<div class='encabezado'>$imagen GLOBAL FREIGHT, C.A.</div>");
             $mpdf->WriteHtml($content); // call mpdf write html
             echo $mpdf->Output('ordenGuiaSada', 'D');
+            //return $pdf->render();
+        }else{throw new NotFoundHttpException('Solicitud Inválida.');}
+        
+    }
+	
+	public function actionLista()
+    {
+        //var_dump(Yii::$app->request->post());die;
+        if (Yii::$app->request->post('lista')){
+
+            $modelLista = Lista::findOne(Yii::$app->request->post('lista'));
+            $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+	        $modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
+            //$modelCarga = Carga::find();
+			//var_dump($modelFlete);die;
+
+            $imagen =  Html::img('@web/images/logo-sitrascar.png');
+            $content = $this->renderPartial('_lista',['modelLista'=>$modelLista, 'modelDistribucion'=>$modelDistribucion, 'modelFlete'=>$modelFlete]);
+            $pdf = new Pdf(['cssInline' => '.kv-heading-1{font-size:24px}']); // or new Pdf();
+            $mpdf = $pdf->api; // fetches mpdf api
+            $mpdf->SetHTMLHeader("<div class='encabezado'>$imagen</div>");
+            $mpdf->WriteHtml($content); // call mpdf write html
+            echo $mpdf->Output('lista', 'D');
             //return $pdf->render();
         }else{throw new NotFoundHttpException('Solicitud Inválida.');}
         

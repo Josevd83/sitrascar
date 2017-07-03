@@ -19,7 +19,7 @@ class DistribucionSearch extends Distribucion
     {
         return [
             [['ID', 'CARGA_ID', 'CANTIDAD', 'CANT_FLETES', 'DIAS_VENCE_PI', 'CODIGO_SICA', 'CANT_DESPACHADA', 'ESTATUS_DIS'], 'integer'],
-            [['FE_ASIGNACION', 'PERMISO_INSAI', 'FE_EMISION_PI', 'FE_VENCE_PI', 'OBSERVACIONES', 'FE_REGISTRO', 'CENTRALES_ID'], 'safe'],
+            [['FE_ASIGNACION', 'PERMISO_INSAI', 'FE_EMISION_PI', 'FE_VENCE_PI', 'OBSERVACIONES', 'FE_REGISTRO', 'CENTRALES_ID','DESCRIPCION'], 'safe'],
         ];
     }
 
@@ -76,7 +76,9 @@ class DistribucionSearch extends Distribucion
 
         $query->andFilterWhere(['like', 'PERMISO_INSAI', $this->PERMISO_INSAI])
             ->andFilterWhere(['like', 'OBSERVACIONES', $this->OBSERVACIONES])
+            ->andFilterWhere(['like', 'DESCRIPCION', $this->DESCRIPCION])
             ->andFilterWhere(['like', 'cENTRALES.NOMBRE', $this->CENTRALES_ID]);
+            
 
         return $dataProvider;
     }

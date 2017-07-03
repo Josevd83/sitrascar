@@ -44,9 +44,13 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'FE_VENCE_LIC')->textInput() ?>
 
-    <?= $form->field($model, 'IMG_CEDULA')->textInput(['maxlength' => true]) ?>
+    <?php // echo $form->field($model, 'IMG_CEDULA')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'file2')->fileInput() ?>
 
-    <?= $form->field($model, 'IMG_LICENCIA')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'IMG_LICENCIA')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'file3')->fileInput() ?>
 
     <?php //echo $form->field($model, 'IMG_CERTIFICADO')->textInput(['maxlength' => true]) ?>
     

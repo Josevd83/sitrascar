@@ -27,7 +27,7 @@ use yii\web\View;
     <?php
         echo $form->field($model, 'DISTRIBUCION_ID')->widget(DepDrop::classname(), [
             'options'=>['id'=>'subcat-id'],
-            'data'=>[$modelDistribucion->ID => $modelDistribucion->OBSERVACIONES],
+            'data'=>[$modelDistribucion->ID => $modelDistribucion->DESCRIPCION],
             'select2Options'=>['pluginOptions'=>['allowClear'=>true]],
             'pluginOptions'=>[
                 'depends'=>['distribucion-centrales_id'],

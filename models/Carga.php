@@ -53,6 +53,7 @@ class Carga extends \yii\db\ActiveRecord
             [['PESO', 'PESO_ASIGNADO', 'PESO_DISTRIBUIDO'], 'number'],
             [['OBSERVACIONES'], 'string'],
             [['COD_VIAJE'], 'string', 'max' => 50],
+            [['DESCRIPCION'], 'string', 'max' => 200],
             [['BUQUE_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Buque::className(), 'targetAttribute' => ['BUQUE_ID' => 'ID']],
             [['PAIS_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Pais::className(), 'targetAttribute' => ['PAIS_ID' => 'ID']],
             [['RUBROS_ID'], 'exist', 'skipOnError' => true, 'targetClass' => Rubros::className(), 'targetAttribute' => ['RUBROS_ID' => 'ID']],
@@ -68,6 +69,7 @@ class Carga extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'Numero',
+            'DESCRIPCION' => 'Descripcion de la Carga',
             'TIPO_CARGA_ID' => 'Tipo de Carga',
             'tIPOCARGA.NOMBRE' => 'Tipo de Carga',
             'PUERTO_ID' => 'Puerto de Llegada',

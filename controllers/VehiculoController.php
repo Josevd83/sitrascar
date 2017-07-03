@@ -8,6 +8,8 @@ use app\models\VehiculoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\FormUpload;
+use yii\web\UploadedFile;
 
 /**
  * VehiculoController implements the CRUD actions for Vehiculo model.
@@ -65,7 +67,11 @@ class VehiculoController extends Controller
     {
         $model = new Vehiculo();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = UploadedFile::getInstance($model, 'file');
+            $model->file->saveAs('carnet/' . $model->PLACA_CHUTO . '.' . $model->file->extension);
+            $model->IMG_CARNET = 'carnet/' . $model->PLACA_CHUTO . '.' . $model->file->extension;
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('create', [
@@ -83,8 +89,16 @@ class VehiculoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $actual_image = $model->IMG_CARNET;
+        if ($model->load(Yii::$app->request->post())) {
+            $image= UploadedFile::getInstance($model, 'file');
+            if(!empty($image) && $image->size !== 0) {
+                $model->file = UploadedFile::getInstance($model, 'file');
+                $model->file->saveAs('carnet/' . $model->PLACA_CHUTO . '.' . $model->file->extension);
+                $model->IMG_CARNET = 'carnet/' . $model->PLACA_CHUTO . '.' . $model->file->extension;
+            }else
+                $model->IMG_CARNET = $actual_image;
+            $model->save(false);
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [

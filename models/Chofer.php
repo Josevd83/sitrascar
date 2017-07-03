@@ -30,6 +30,8 @@ use Yii;
 class Chofer extends \yii\db\ActiveRecord
 {
     public $file;
+    public $file2;
+    public $file3;
     /**
      * @inheritdoc
      */
@@ -51,8 +53,8 @@ class Chofer extends \yii\db\ActiveRecord
             [['CEDULA', 'RIF'], 'string', 'max' => 10],
             [['PRIMER_NOMBRE', 'SEGUNDO_NOMBRE', 'PRIMER_APELLIDO', 'SEGUNDO_APELLIDO'], 'string', 'max' => 30],
             [['DIRECCION'], 'string', 'max' => 250],
-            [['CORREO', 'IMG_CEDULA', 'IMG_LICENCIA'], 'string', 'max' => 200],
-            [['file'], 'file', 
+            [['CORREO', 'IMG_LICENCIA'], 'string', 'max' => 200],
+            [['file', 'file2', 'file3'], 'file', 
             'skipOnEmpty' => true,
             //'uploadRequired' => 'No has seleccionado ningún archivo', //Error
             'maxSize' => 1024*1024*1, //1 MB
@@ -87,10 +89,12 @@ class Chofer extends \yii\db\ActiveRecord
             'FE_VENCE_CER' => 'Fecha de Vencimiento del Certificado Medico',
             'FE_VENCE_LIC' => 'Fecha de Vencimiento de la Licencia',
             'IMG_CEDULA' => 'Imagen  Cedula',
-            'IMG_LICENCIA' => 'Imgagen  Licencia',
+            'IMG_LICENCIA' => 'Imagen  Licencia',
             'IMG_CERTIFICADO' => 'Imagen Certificado Medico',
             'ESTATUS' => 'Estatus',
             'file' => 'Seleccionar Imagen Certificado Medico:',
+            'file2' => 'Seleccionar Imagen Cedula de Identidad:',
+            'file3' => 'Seleccionar Imagen de la Licencia de Conducir:',
         ];
     }
 

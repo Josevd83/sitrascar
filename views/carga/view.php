@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'ID',
+            'DESCRIPCION',
             'tIPOCARGA.NOMBRE',
             'pUERTO.NOMBRE',
             'rUBROS.NOMBRE',
@@ -40,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'PESO',
             'COD_VIAJE',
             'PESO_ASIGNADO',
-            'ESTATUS_CARGA',
+            ['label'=>'Estatus de la Carga','value'=>($model->ESTATUS_CARGA == 1)?'EN PROCESO':'COMPLETADO'],
             'PESO_DISTRIBUIDO',
             'FECHA_REGISTRO',
             'OBSERVACIONES:ntext',

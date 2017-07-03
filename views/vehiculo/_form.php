@@ -11,7 +11,9 @@ use yii\helpers\ArrayHelper;
 <div class="vehiculo-form">
 	<?php $var = [0 => 'INACTIVO', 1 => 'DISPONIBLE', 2 => 'ASIGNADO'] ?>
     <?php $var2 = ArrayHelper::map(app\models\Empresa::find()->all(), 'ID','NOMBRE') ?>
-    <?php $form = ActiveForm::begin(); ?> 
+    <?php $form = ActiveForm::begin([
+     "options" => ["enctype" => "multipart/form-data"],
+     ]); ?> 
 
     <?= $form->field($model, 'EMPRESA_ID')->dropDownList($var2, ['prompt' => 'Seleccione la Empresa']) ?>
 
@@ -35,7 +37,8 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'FE_VENCE_PRC')->textInput() ?>
 
-    <?= $form->field($model, 'IMG_CARNET')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'IMG_CARNET')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'file')->fileInput() ?>
 
     <?= $form->field($model, 'ESTATUS')->dropDownList($var, ['prompt' => 'Seleccione Estatus']) ?>
 

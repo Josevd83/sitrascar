@@ -90,12 +90,16 @@ class CentralesController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelMunicipio = Municipio::findOne($model->MUNICIPIO_ID);
+        $modelParroquia = Parroquia::findOne($model->PARROQUIA_ID);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelMunicipio' => $modelMunicipio,
+                'modelParroquia' => $modelParroquia,
             ]);
         }
     }

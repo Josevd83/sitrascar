@@ -23,32 +23,33 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'ID',
+              'DESCRIPCION',
+            //'ID',
             //'TIPO_CARGA_ID',
             //'PUERTO_ID',
             //'RUBROS_ID',
             //'rUBROS.NOMBRE',
             [
-              'attribute'=> 'RUBROS_ID',
-              'value'=>'rUBROS.NOMBRE'
-            ],
-            [
               'attribute'=> 'PAIS_ID',
               'value'=>'pAIS.NOMBRE'
             ],
             [
+              'attribute'=> 'RUBROS_ID',
+              'value'=>'rUBROS.NOMBRE'
+            ],
+
+           /* [
               'attribute'=> 'BUQUE_ID',
               'value'=>'bUQUE.NOMBRE'
             ],
-            'FECHA_ATRAQUE',
+            'FECHA_ATRAQUE',*/
             // 'BL',
             // 'MUELLE',
             // 'PESO',
             // 'COD_VIAJE',
-            // 'PESO_ASIGNADO',
+             'PESO_ASIGNADO',
             // 'ESTATUS_CARGA',
-            // 'PESO_DISTRIBUIDO',
+             'PESO_DISTRIBUIDO',
             // 'FECHA_REGISTRO',
             // 'OBSERVACIONES:ntext',
 

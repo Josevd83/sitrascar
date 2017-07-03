@@ -31,11 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'ID',
             'eMPRESA.NOMBRE',
             'BANCO',
-            'TIPO',
+             ['label'=>'Tipo de Cuenta','value'=>($model->TIPO == 1)?'CORRIENTE':'AHORRO'],
             'NRO_CUENTA',
             'CEDULA_RIF',
             'TITULAR',
-            'ESTATUS',
+            ['label'=>'Estatus','value'=>($model->ESTATUS == 1)?'ACTIVA':'INACTIVA'],
         ],
     ]) ?>
 

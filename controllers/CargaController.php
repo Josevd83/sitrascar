@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Carga;
+use app\models\Buque;
 use app\models\CargaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -71,9 +72,14 @@ class CargaController extends Controller
             $date = date('Y-m-d');
             //var_dump($date);die;
             $model->FECHA_REGISTRO = $date;
+            $model->ESTATUS_CARGA = 1;
+            
+            $modelBuque = Buque::findOne(['ID'=>$model->BUQUE_ID]);
+ 
+            $model->DESCRIPCION = $modelBuque->NOMBRE.' - '.$model->FECHA_ATRAQUE;
+                    
             //var_dump($model->FECHA_REGISTRO);die;
-            //$model->FECHA_REGISTRO = new Expression('NOW');
-            //var_dump(curdate);die;
+
             $model->save();
             
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -94,7 +100,10 @@ class CargaController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+            $modelBuque = Buque::findOne(['ID'=>$model->BUQUE_ID]);
+            $model->DESCRIPCION = $modelBuque->NOMBRE.' / '.$model->FECHA_ATRAQUE;
+            $model->save();
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [

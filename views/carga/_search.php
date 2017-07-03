@@ -15,7 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ID') ?>
+    <?= $form->field($model, 'DESCRIPCION') ?>
+    
+    <?php //echo $form->field($model, 'ID') ?>
 
     <?php //echo $form->field($model, 'TIPO_CARGA_ID') ?>
 
@@ -37,11 +39,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'COD_VIAJE') ?>
 
-    <?php // echo $form->field($model, 'PESO_ASIGNADO') ?>
+    <?= $form->field($model, 'PESO_ASIGNADO') ?>
 
     <?php // echo $form->field($model, 'ESTATUS_CARGA') ?>
 
-    <?php // echo $form->field($model, 'PESO_DISTRIBUIDO') ?>
+    <?= $form->field($model, 'PESO_DISTRIBUIDO') ?>
 
     <?php // echo $form->field($model, 'FECHA_REGISTRO') ?>
 

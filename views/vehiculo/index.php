@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'VEHICULOS';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="vehiculo-index">
 
@@ -32,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'PLACA_CHUTO',
             'PLACA_REMOLQUE',
             'MARCA',
+           
             'ESTATUS',
             //'MODELO',
             // 'SERIAL',

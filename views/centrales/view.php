@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('BORRAR', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'ESTA SEGURO DE ELIMINAR ESTE REGISTRO?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,14 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'ID',
             'eSTADO.NOMBRE',
-            'MUNICIPIO_ID',
-            'PARROQUIA_ID',
+            'mUNICIPIO.NOMBRE',
+            'pARROQUIA.NOMBRE',
             'NOMBRE',
             'RIF',
             'DIRECCION',
             'TELEFONO_1',
             'TELEFONO_2',
-            'ESTATUS',
+            ['label'=>'Estatus','value'=>($model->ESTATUS == 1)?'ACTIVO':'INACTIVO'],
         ],
     ]) ?>
 

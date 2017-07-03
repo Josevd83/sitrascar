@@ -87,10 +87,23 @@ class ChoferController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $modelEmpresachofer->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
+            $model->file2 = UploadedFile::getInstance($model, 'file2');
+            $model->file3 = UploadedFile::getInstance($model, 'file3');
             //$file = $model->file;
-            $model->file->saveAs('certificados/' . $model->file->baseName . '.' . $model->file->extension);
-            $model->IMG_CERTIFICADO = 'certificados/' . $model->file->baseName . '.' . $model->file->extension;
-            //var_dump($model);die;
+            if(!empty($model->file)) {
+            $model->file->saveAs('certificados/' .$model->CEDULA . '.' . $model->file->extension);
+            $model->IMG_CERTIFICADO = 'certificados/' .$model->CEDULA . '.' . $model->file->extension;
+            }
+           if(!empty($model->file2)) {
+            $model->file2->saveAs('cedulas/' .$model->CEDULA. '.' . $model->file2->extension);
+            $model->IMG_CEDULA = 'cedulas/' .$model->CEDULA . '.' . $model->file2->extension;
+            }
+            if(!empty($model->file3)) {
+            $model->file3->saveAs('licencias/' .$model->CEDULA . '.' . $model->file3->extension);
+            $model->IMG_LICENCIA = 'licencias/' .$model->CEDULA . '.' . $model->file3->extension;
+            }
+            //var_dump($mode
+            //l);die;
             //if($model->save()){
                 $model->save(false);
                 //var_dump($model->ID);die;
@@ -132,16 +145,32 @@ class ChoferController extends Controller
     {
         $model = $this->findModel($id);
         $actual_image = $model->IMG_CERTIFICADO;
+        $actual_image2 = $model->IMG_CEDULA;
+        $actual_image3 = $model->IMG_LICENCIA;
         $modelEmpresachofer = Empresachofer::findOne(['CHOFER_ID'=>$model->ID]);
                 
         if ($model->load(Yii::$app->request->post())&& $modelEmpresachofer->load(Yii::$app->request->post())){
             $image= UploadedFile::getInstance($model, 'file');
+            $image2= UploadedFile::getInstance($model, 'file2');
+            $image3= UploadedFile::getInstance($model, 'file3');
             if(!empty($image) && $image->size !== 0) {
                 $model->file = UploadedFile::getInstance($model, 'file');
-                $model->file->saveAs('certificados/' . $model->file->baseName . '.' . $model->file->extension);
-                $model->IMG_CERTIFICADO = 'certificados/' . $model->file->baseName . '.' . $model->file->extension;
+                $model->file->saveAs('certificados/' . $model->CEDULA . '.' . $model->file->extension);
+                $model->IMG_CERTIFICADO = 'certificados/' . $model->CEDULA . '.' . $model->file->extension;
             }else
                 $model->IMG_CERTIFICADO = $actual_image;
+            if(!empty($image2) && $image2->size !== 0) {
+                $model->file2 = UploadedFile::getInstance($model, 'file2');
+                $model->file2->saveAs('cedulas/' . $model->CEDULA . '.' . $model->file2->extension);
+                $model->IMG_CEDULA = 'cedulas/' . $model->CEDULA . '.' . $model->file2->extension;
+            }else
+                $model->IMG_CEDULA = $actual_image2;
+            if(!empty($image3) && $image3->size !== 0) {
+                $model->file3 = UploadedFile::getInstance($model, 'file3');
+                $model->file3->saveAs('licencias/' . $model->CEDULA . '.' . $model->file3->extension);
+                $model->IMG_LICENCIA = 'licencias/' . $model->CEDULA . '.' . $model->file3->extension;
+            }else
+                $model->IMG_LICENCIA = $actual_image3;
             $model->save(false); 
             $modelEmpresachofer->CHOFER_ID = $model->ID;
             $modelEmpresachofer->EMPRESA_ID = $modelEmpresachofer->EMPRESA_ID;

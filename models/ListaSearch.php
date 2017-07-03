@@ -18,7 +18,9 @@ class ListaSearch extends Lista
     public function rules()
     {
         return [
-            [['ID', 'DISTRIBUCION_ID', 'FECHA_CREACION', 'ESTATUS_LISTA'], 'integer'],
+            [['ID', 'FECHA_CREACION', 'ESTATUS_LISTA'], 'integer'],
+            [['DISTRIBUCION_ID'], 'safe'],
+            //[['ID', 'DISTRIBUCION_ID', 'FECHA_CREACION', 'ESTATUS_LISTA'], 'integer'],
         ];
     }
 
@@ -55,14 +57,17 @@ class ListaSearch extends Lista
             // $query->where('0=1');
             return $dataProvider;
         }
+        $query->joinWith('dISTRIBUCION');
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'ID' => $this->ID,
-            'DISTRIBUCION_ID' => $this->DISTRIBUCION_ID,
+            'LISTA.ID' => $this->ID,
+           // 'DISTRIBUCION_ID' => $this->DISTRIBUCION_ID,
             'FECHA_CREACION' => $this->FECHA_CREACION,
             'ESTATUS_LISTA' => $this->ESTATUS_LISTA,
         ]);
+
+        $query->andFilterWhere(['like', 'dISTRIBUCION.DESCRIPCION', $this->DISTRIBUCION_ID]);
 
         return $dataProvider;
     }

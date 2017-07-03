@@ -18,8 +18,8 @@ class CuentasSearch extends Cuentas
     public function rules()
     {
         return [
-            [['ID', 'NRO_CUENTA'], 'integer'],
-            [['BANCO', 'TIPO', 'CEDULA_RIF', 'TITULAR', 'ESTATUS', 'EMPRESA_ID'], 'safe'],
+            [['ID'], 'integer'],
+            [['BANCO', 'TIPO', 'CEDULA_RIF', 'TITULAR', 'ESTATUS', 'EMPRESA_ID', 'NRO_CUENTA'], 'safe'],
         ];
     }
 

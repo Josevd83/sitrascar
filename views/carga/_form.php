@@ -17,6 +17,8 @@ use kartik\widgets\DatePicker;
     <?php $var5 = ArrayHelper::map(app\models\Buque::find()->all(), 'ID', 'NOMBRE') ?>
     
     <?php $form = ActiveForm::begin(); ?>
+    
+    <?= $form->field($model, 'DESCRIPCION')->textInput(['disabled' => true]) ?>
 
     <?= $form->field($model, 'TIPO_CARGA_ID')->dropDownList($var, ['prompt' => 'Seleccione' ]) ?>
 
@@ -51,7 +53,7 @@ use kartik\widgets\DatePicker;
 
     <?= $form->field($model, 'PESO_ASIGNADO')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ESTATUS_CARGA')->textInput(['maxlength' => true]) ?>
+    <?php // echo $form->field($model, 'ESTATUS_CARGA')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'PESO_DISTRIBUIDO')->textInput(['disabled' => true]) ?>
 

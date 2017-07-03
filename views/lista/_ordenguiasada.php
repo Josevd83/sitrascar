@@ -48,8 +48,8 @@ table td{
 </style>
 
 <div class="espacio-encabezado"></div>
-
-<p class="texto-derecha">Puerto Cabello, 29 de Abril de 2017</p>
+<?php $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");?>
+<p class="texto-derecha">Puerto Cabello, <?= date('d') ?> de <?= $meses[date('n')-1] ?> de <?= date('Y') ?></p>
 
 <p class="interlineado-1">SEÑORES:<br />
 C.V.A.<br />
@@ -78,189 +78,32 @@ Nos dirigimos a ustedes en la oportunidad de solicitar la emisión de las guías
 		<th>GUIA</th>
 		<th>TELEFONO</th>
 	</tr>
+	<?php $contador = 1; ?>
+    <?php foreach($modelFlete as $flete): ?>
+    <?php
+		$nombre1 = $flete->eMPRESACHOFER->cHOFER->PRIMER_NOMBRE;
+		$nombre2 = $flete->eMPRESACHOFER->cHOFER->SEGUNDO_NOMBRE;
+		$apellido1 = $flete->eMPRESACHOFER->cHOFER->PRIMER_APELLIDO;
+		$apellido2 = $flete->eMPRESACHOFER->cHOFER->SEGUNDO_APELLIDO;
+		$cedula = $flete->eMPRESACHOFER->cHOFER->CEDULA;
+		$placaChuto = $flete->eMPRESACHOFER->vEHICULO->PLACA_CHUTO;
+		$placaRemolque = $flete->eMPRESACHOFER->vEHICULO->PLACA_REMOLQUE;
+		$telefono1 = $flete->eMPRESACHOFER->cHOFER->TELEFONO_1;
+	?>
 	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
+   	  <td class="datos"><?= $contador ?></td>
+    	<td class="datos"><?= $nombre1." ".$nombre2." ".$apellido1." ".$apellido2 ?></td>
+    	<td class="datos"><?= $cedula ?></td>
+    	<td class="datos"><?= $placaChuto ?></td>
+    	<td class="datos"><?= $placaRemolque ?></td>
+    	<td class="datos"></td>
+    	<td class="datos"><?= $telefono1 ?></td>
 	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>ABRAHAN JOSE MARTINEZ GARCIA   </td>
-		<td>12.934.645</td>
-		<td>A14AZ9D</td>
-		<td>A85AU3L</td>
-		<td></td>
-		<td></td>
-	</tr>
+    <?php $contador ++; ?>
+    <?php endforeach; ?>
 </table>
 
-<p>Listado No. 3</p>
+<p>Listado No. <?= $modelLista->ID ?></p>
 
 <p class="texto-derecha">Atentamente,</p>
 

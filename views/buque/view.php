@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'ID',
             'NOMBRE',
-            'ESTATUS',
+            ['label'=>'Estatus','value'=>($model->ESTATUS == 1)?'ACTIVO':'INACTIVO'],
         ],
     ]) ?>
 

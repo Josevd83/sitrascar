@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Crear Nueva Lista', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('Ver Listado', ['index'], ['class' => 'btn btn-warning']) ?>
+        <?= Html::a('Volver', ['index'], ['class' => 'btn btn-warning']) ?>
         <?= Html::a('Modificar', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Eliminar', ['delete', 'id' => $model->ID], [
             'class' => 'btn btn-danger',
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     //'value'=>$model->solicitante->NACIONALIDAD."-".$model->solicitante->CEDULA,
                                                     'value'=>$model->ID,
                                                     //'type'=>DetailView::INPUT_SELECT2, 
-                                                    'label'=>'Id',
+                                                    'label'=>'Lista N°',
                                                     'displayOnly'=>true,
                                                     'valueColOptions'=>['style'=>'width:30%']
                                                 ],
@@ -142,9 +142,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'columns' => [
                                                 [
                                                     'attribute'=>'ID',
-                                                    'value'=>$modelDistribucion->ID,
+                                                    'value'=>$modelDistribucion->DESCRIPCION,
                                                     //'type'=>DetailView::INPUT_SELECT2, 
-                                                    'label'=>'Id de la Distribución',
+                                                    'label'=>'Distribución',
                                                     'displayOnly'=>true,
                                                     'valueColOptions'=>['style'=>'width:30%']
                                                 ],
@@ -188,7 +188,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute'=>'ID',
                                 'format'=>'raw',
                                 'label'=>'Solicitud Guía SADA',
-                                'value'=> Html::a(Html::img(Url::to('@web/images/pdf-icon.png'),['width'=>'50px']), ['ordencva'],['title'=>'Descargar Solicitud Guía SADA']),
+                                'value'=> Html::a(Html::img(Url::to('@web/images/pdf-icon.png'),['width'=>'50px']), ['ordencva'],['title'=>'Descargar Solicitud Guía SADA','data-method'=>'POST','data-params' =>['lista' => $model->ID]]),
                                 //'value'=> Html::a('Crear Nueva Lista', ['create'], ['class' => 'btn btn-success']),
                                 //'format'=>['decimal', 2],
                                 'inputContainer' => ['class'=>'col-sm-6'],
@@ -200,6 +200,16 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'label'=>'Solicitud Permiso INSAI',
                                 //'value'=> Html::a('', ['create'], ['class'=>'fa fa-file-pdf-o','style'=>'width:150px;']),
                                 'value'=> Html::a(Html::img(Url::to('@web/images/pdf-icon.png'),['width'=>'50px']), ['ordenguiasada'],['title'=>'Solicitud Permiso INSAI','data-method'=>'POST','data-params' =>['lista' => $model->ID]]),
+                                //'format'=>['decimal', 2],
+                                'inputContainer' => ['class'=>'col-sm-6'],
+                                'displayOnly'=>true,
+                            ],
+							[
+                                'attribute'=>'ID',
+                                'format'=>'raw',
+                                'label'=>'Lista',
+                                //'value'=> Html::a('', ['create'], ['class'=>'fa fa-file-pdf-o','style'=>'width:150px;']),
+                                'value'=> Html::a(Html::img(Url::to('@web/images/pdf-icon.png'),['width'=>'50px']), ['lista'],['title'=>'Solicitud Permiso INSAI','data-method'=>'POST','data-params' =>['lista' => $model->ID]]),
                                 //'format'=>['decimal', 2],
                                 'inputContainer' => ['class'=>'col-sm-6'],
                                 'displayOnly'=>true,

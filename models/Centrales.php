@@ -63,6 +63,8 @@ class Centrales extends \yii\db\ActiveRecord
             'MUNICIPIO_ID' => 'Municipio',
             'ESTADO_ID' => 'Estado',
             'eSTADO.NOMBRE' => 'Estado',
+            'mUNICIPIO.NOMBRE' => 'Municipio',
+            'pARROQUIA.NOMBRE' => 'Parroquia',
             'NOMBRE' => 'Nombre de la Central',
             'RIF' => 'Rif',
             'DIRECCION' => 'Direccion',

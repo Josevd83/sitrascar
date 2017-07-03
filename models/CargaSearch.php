@@ -19,7 +19,7 @@ class CargaSearch extends Carga
     {
         return [
             [['ID', 'TIPO_CARGA_ID', 'PUERTO_ID', 'BL', 'MUELLE', 'ESTATUS_CARGA'], 'integer'],
-            [['FECHA_ATRAQUE', 'COD_VIAJE', 'FECHA_REGISTRO', 'OBSERVACIONES', 'RUBROS_ID', 'PAIS_ID', 'BUQUE_ID'], 'safe'],
+            [['FECHA_ATRAQUE', 'COD_VIAJE', 'FECHA_REGISTRO', 'OBSERVACIONES', 'RUBROS_ID', 'PAIS_ID', 'BUQUE_ID', 'DESCRIPCION'], 'safe'],
             [['PESO', 'PESO_ASIGNADO', 'PESO_DISTRIBUIDO'], 'number'],
         ];
     }
@@ -77,6 +77,7 @@ class CargaSearch extends Carga
         ]);
 
         $query->andFilterWhere(['like', 'COD_VIAJE', $this->COD_VIAJE])
+            ->andFilterWhere(['like', 'DESCRIPCION', $this->DESCRIPCION])
             ->andFilterWhere(['like', 'OBSERVACIONES', $this->OBSERVACIONES])
             ->andFilterWhere(['like', 'rUBROS.NOMBRE', $this->RUBROS_ID])
             ->andFilterWhere(['like', 'pAIS.NOMBRE', $this->PAIS_ID])

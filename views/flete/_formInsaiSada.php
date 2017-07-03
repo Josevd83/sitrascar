@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
 use yii\web\View;
+use yii\helpers\Url;
 
 $this->registerCssFile("@web/css/acordeon.css");
 $this->registerCss("
@@ -46,6 +47,7 @@ $this->registerCss("
                 <?php //var_dump($flete->GUIA_SADA);die; ?>
                 <?= $form->field($flete, "[$index]ID")->hiddenInput()->label(false) ?>
                 <li>
+
                     <?= (!empty($flete->GUIA_SADA))? '<div class="left-status"><span class="label label-success">Guia Sada</span></div>': '<div class="left-status"><span class="label label-danger">Guia Sada</span></div>' ?>
                     
                     <?= (!empty($flete->ORDEN_PESO_CARGA))? '<div class="left-status"><span class="label label-success">Orden Pesaje - Carga</span></div>': '<div class="left-status"><span class="label label-danger">Orden Pesaje - Carga</span></div>' ?>
@@ -137,6 +139,7 @@ $this->registerCss("
                             ?>
                         </div>
                     </div>
+                    <?= (!empty($flete->GUIA_SADA) && !empty($flete->ORDEN_PESO_CARGA))? Html::a('Generar Orden de Carga CVA', ['flete/ordencargacva'],['title'=>'Generar Orden de Carga CVA','data-method'=>'POST','data-params' =>['lista' => $flete->ID],'class'=>'btn btn-info btn-xs']): '' ?>
                 </li>
             <?php endforeach; ?>
         </ul>

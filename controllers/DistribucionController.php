@@ -77,14 +77,23 @@ class DistribucionController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post())) {
-			$date = date('Y-m-d');
+            $date = date('Y-m-d');
             $model->FE_REGISTRO = $date;
+            $model->ESTATUS_DIS = 1;
+            $model->FE_VENCE_PI = Yii::$app->formatter->asDate($model->FE_VENCE_PI, 'Y-MM-dd');
+            //var_dump($model->FE_VENCE_PI);die;
             $cantidadAsignada = $model->CANTIDAD;
+            $modelCentrales = Centrales::findOne(['ID'=>$model->CENTRALES_ID]);
             $modelCarga = Carga::findOne(['ID'=>$model->CARGA_ID]);
+            $model->DESCRIPCION = $modelCarga->DESCRIPCION.' / '.$modelCentrales->NOMBRE;           
             $sumaCarga = $modelCarga->PESO_DISTRIBUIDO+$cantidadAsignada;
-            $modelCarga->PESO_DISTRIBUIDO=$sumaCarga;
-            if($modelCarga->save()){
-                $model->save();
+            $modelCarga->PESO_DISTRIBUIDO = $sumaCarga;
+            if($sumaCarga == $modelCarga->PESO_ASIGNADO){
+                $modelCarga->ESTATUS_CARGA = 0;
+            }
+                      
+            if($modelCarga->save(false)){
+                $model->save(false);
             }
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
@@ -113,11 +122,16 @@ class DistribucionController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 	    $cantidadAsignada = $model->CANTIDAD;
             $modelCarga = Carga::findOne(['ID'=>$model->CARGA_ID]);
-		    $pesodistribuido=$modelCarga->PESO_DISTRIBUIDO-$cantidadAnterior;
+            $pesodistribuido=$modelCarga->PESO_DISTRIBUIDO-$cantidadAnterior;
             $sumaCarga = $pesodistribuido+$cantidadAsignada;
             $modelCarga->PESO_DISTRIBUIDO=$sumaCarga;
+            $modelCentrales = Centrales::findOne(['ID'=>$model->CENTRALES_ID]);
+            $model->DESCRIPCION = $modelCarga->DESCRIPCION.' / '.$modelCentrales->NOMBRE;
+            if($sumaCarga == $modelCarga->PESO_ASIGNADO){
+                $modelCarga->ESTATUS_CARGA = 0;
+            }
             if($modelCarga->save()){
-                $model->save();
+                $model->save(false);
             }
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {

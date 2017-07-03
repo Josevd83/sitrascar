@@ -36,8 +36,8 @@ class Cuentas extends \yii\db\ActiveRecord
     {
         return [
             [['EMPRESA_ID'], 'required'],
-            [['EMPRESA_ID', 'NRO_CUENTA'], 'integer'],
-            [['ESTATUS'], 'string'],
+            [['EMPRESA_ID'], 'integer'],
+            [['ESTATUS', 'NRO_CUENTA'], 'string'],
             [['BANCO'], 'string', 'max' => 100],
             [['TIPO', 'CEDULA_RIF'], 'string', 'max' => 10],
             [['NRO_CUENTA'], 'string', 'min' => 20, 'max' => 20],

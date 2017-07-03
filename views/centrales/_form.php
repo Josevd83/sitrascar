@@ -9,6 +9,14 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Centrales */
 /* @var $form yii\widgets\ActiveForm */
+if (isset($modelMunicipio))
+    $municipio =[$modelMunicipio->ID => $modelMunicipio->NOMBRE];
+else 
+    $municipio =[];
+if (isset($modelParroquia))
+    $parroquia =[$modelParroquia->ID => $modelParroquia->NOMBRE];
+else 
+    $parroquia =[];
 ?>
 
 <div class="centrales-form">
@@ -21,6 +29,7 @@ use yii\helpers\Url;
      <?php
         echo $form->field($model, 'MUNICIPIO_ID')->widget(DepDrop::classname(), [
             'options'=>['id'=>'subcat-id'],
+            'data'=>$municipio,
             'pluginOptions'=>[
                 'depends'=>['centrales-estado_id'],
                 'placeholder'=>'Seleccione',
@@ -31,6 +40,7 @@ use yii\helpers\Url;
      <?php
         echo $form->field($model, 'PARROQUIA_ID')->widget(DepDrop::classname(), [
             'options'=>['id'=>'subcat-id2'],
+            'data'=>$parroquia,
             'pluginOptions'=>[
                 'depends'=>['subcat-id'],
                 'placeholder'=>'Seleccione',
@@ -38,7 +48,7 @@ use yii\helpers\Url;
             ]
         ]);
     ?>
-    <?= $form->field($model, 'PARROQUIA_ID')->textInput(['maxlength' => true]) ?>
+    <?php // echo $form->field($model, 'PARROQUIA_ID')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'NOMBRE')->textInput(['maxlength' => true]) ?>
 

@@ -15,15 +15,15 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ID') ?>
+    <?= $form->field($model, 'DESCRIPCION') ?>
     
-    <?= $form->field($model, 'CARGA_ID') ?>
-
-    <?= $form->field($model, 'CENTRALES_ID') ?>
+    <?= $form->field($model, 'FE_ASIGNACION') ?>
 
     <?= $form->field($model, 'CANTIDAD') ?>
 
-    <?= $form->field($model, 'FE_ASIGNACION') ?>
+    <?= $form->field($model, 'CANT_DESPACHADA') ?>
+
+    <?php // echo $form->field($model, '') ?>
 
     <?php // echo $form->field($model, 'CANT_FLETES') ?>
 

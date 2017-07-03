@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'ID',
-            'CARGA_ID',
+            'DESCRIPCION',
+            'cARGA.DESCRIPCION',
             'cENTRALES.NOMBRE',
             'CANTIDAD',
             'FE_ASIGNACION',
@@ -42,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'CANT_DESPACHADA',
             'OBSERVACIONES:ntext',
             'FE_REGISTRO',
-            'ESTATUS_DIS',
+            ['label'=>'Estatus de la Distribucion','value'=>($model->ESTATUS_DIS == 1)?'EN PROCESO':'COMPLETADO'],
         ],
     ]) ?>
 

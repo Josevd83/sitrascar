@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\DatePicker;
 use kartik\widgets\DepDrop;
+use yii\web\View;
 /* @var $this yii\web\View */
 /* @var $model app\models\Distribucion */
 /* @var $form yii\widgets\ActiveForm */
@@ -18,7 +19,7 @@ else
 ?>
 
 <div class="distribucion-form">
-    <?php $var = ArrayHelper::map(app\models\Carga::find()->all(), 'ID','ID') ?>
+    <?php $var = ArrayHelper::map(app\models\Carga::find()->all(), 'ID','DESCRIPCION') ?>
     <?php $var2 = ArrayHelper::map(app\models\Centrales::find()->all(), 'ID','NOMBRE') ?>
     <?php $form = ActiveForm::begin(); ?>
 
@@ -69,9 +70,26 @@ else
         ]); 
     ?>
 
-    <?= $form->field($model, 'DIAS_VENCE_PI')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'DIAS_VENCE_PI')->textInput(['maxlength' => true]) ?>
+    <?php  echo $form->field($model, 'DIAS_VENCE_PI', ['inputOptions'=>['placeholder'=>$model->getAttributeLabel('DIAS_VENCE_PI')]])->textInput(['maxlength' => true,'class'=>'diasVenc'])->label('Dias Vencimiento'); ?>
 
-    <?= $form->field($model, 'FE_VENCE_PI')->textInput() ?>
+    <?php //echo $form->field($model, 'FE_VENCE_PI')->textInput() ?>
+    <?php  echo DatePicker::widget([
+                                    'model' => $model, 
+                                    'attribute' => 'FE_VENCE_PI',
+                                    'removeButton' => false,
+                                    'options' => ['placeholder' => $model->getAttributeLabel('FE_VENCE_PI')],
+				    'readonly' => true,
+				    //'disabled' => true,
+                                    'pluginOptions' => [
+                                        'autoclose'=>true,
+					'format' => 'dd-mm-yyyy'
+                                    ],
+				    'options' => [
+					'class' => 'fechaVencimiento',
+				    ]
+                                ]); 
+    ?>
 
     <?= $form->field($model, 'CODIGO_SICA')->textInput(['maxlength' => true]) ?>
 
@@ -79,9 +97,9 @@ else
 
     <?= $form->field($model, 'OBSERVACIONES')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'FE_REGISTRO')->textInput(['disabled' => true]) ?>
+    <?php // echo $form->field($model, 'FE_REGISTRO')->textInput(['disabled' => true]) ?>
 
-    <?= $form->field($model, 'ESTATUS_DIS')->textInput(['maxlength' => true]) ?>
+    <?php // echo $form->field($model, 'ESTATUS_DIS')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'GUARDAR DISTRIBUCION' : 'ACTUALIZAR DISTRIBUCION', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -90,3 +108,61 @@ else
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<?php 
+$this->registerJsFile(
+    '@web/js/funciones2.js',
+    ['depends' => [\yii\web\JqueryAsset::className()]]
+);
+?>
+
+<?php
+$this->registerJs(
+    '$(function() {
+      $(".expand").on( "click", function() {
+        $(this).next().slideToggle(200);
+        $expand = $(this).find(">:first-child");
+        
+        if($expand.text() == "+") {
+          $expand.text("-");
+        } else {
+          $expand.text("+");
+        }
+      });
+    });
+
+        
+        $(".diasVenc").on("change",function(){
+                if($.isNumeric($(this).val())== false){
+                    alert("Ingresar solo numeros");
+                    $(this).val("");
+                    $("#distribucion-fe_vence_pi").val("");
+                    return false;
+                }
+                var fecha_emision = $("#distribucion-fe_emision_pi").val();
+                if(!fecha_emision){
+                    alert("Ingrese Fecha de Emision");
+                    $(this).closest("li").find(".diasVenc").val("");
+                    return(false);
+                }
+		var fecha = sumaFecha($(this).val(),fecha_emision);
+		$("#distribucion-fe_vence_pi").val(fecha);
+	});
+
+	$(function() {                
+                $(".diasVenc").each(function(){
+                    var fecha_emision = $(this).closest("li").find(".fechaEmision").val();
+			if($(this).val()!="" && fecha_emision!=""){
+				var fecha = sumaFecha($(this).val(),fecha_emision);
+				$("#distribucion-fe_vence_pi").val(fecha);
+
+			}
+		});
+
+   	});
+    ',
+    View::POS_READY
+    //'my-button-handler'
+); 
+?>
+

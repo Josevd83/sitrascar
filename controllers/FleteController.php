@@ -14,6 +14,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\widgets\Growl;
 use yii\helpers\Html;
+use kartik\mpdf\Pdf;
 
 /**
  * FleteController implements the CRUD actions for Flete model.
@@ -197,7 +198,7 @@ class FleteController extends Controller
     {
         $id = 1;
         $modelLista = Lista::findOne($id);
-		$modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+		    $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
         $modelFlete = Flete::findAll(['LISTA_ID'=>$id]);		
         return $this->render('pesaje', [
                 'modelLista'=>$modelLista,
@@ -206,4 +207,27 @@ class FleteController extends Controller
 				
             ]);
     }
+
+  public function actionOrdencargacva()
+  {
+    //var_dump(Yii::$app->request->post());die;
+    if (Yii::$app->request->post('lista')){
+
+        $modelLista = Lista::findOne(Yii::$app->request->post('lista'));
+        $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
+        $modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
+        //$modelCarga = Carga::find();
+
+
+        $imagen =  Html::img('@web/images/logo-sitrascar.png');
+        $content = $this->renderPartial('orden_carga_cva',['modelLista'=>$modelLista, 'modelDistribucion'=>$modelDistribucion, 'modelFlete'=>$modelFlete]);
+        $pdf = new Pdf(['cssInline' => '.kv-heading-1{font-size:24px}']); // or new Pdf();
+        $mpdf = $pdf->api; // fetches mpdf api
+        $mpdf->SetHTMLHeader("<div class='encabezado'>$imagen GLOBAL FREIGHT, C.A.</div>");
+        $mpdf->WriteHtml($content); // call mpdf write html
+        echo $mpdf->Output('ordenGuiaSada', 'D');
+        //return $pdf->render();
+    }else{throw new NotFoundHttpException('Solicitud Inválida.');}
+    
+  }
 }

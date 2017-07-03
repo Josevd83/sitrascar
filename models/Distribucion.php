@@ -61,7 +61,8 @@ class Distribucion extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'CARGA_ID' => 'Numero de Carga',
+            'CARGA_ID' => 'Descripcion de la Carga',
+            'DESCRIPCION' => 'Descripcion de la Distribucion',
             'CENTRALES_ID' => 'Central',
             'cENTRALES.NOMBRE' => 'Central',
             'CANTIDAD' => 'Cantidad Asignada',
@@ -119,8 +120,18 @@ class Distribucion extends \yii\db\ActiveRecord
     
     public function distribucionCarga($attribute, $params)
     {
+        
+        if(isset($this->ID)){
+        $model = Distribucion::findOne($this->ID);
+        //var_dump($this->ID); die;
+	$cantidadAnterior = $model->CANTIDAD;
+        }else
+        $cantidadAnterior = 0;
+        //var_dump($cantidadAnterior); die;
         $modelCarga = Carga::findOne(['ID'=>$this->CARGA_ID]);
-        $sumaCarga = $modelCarga->PESO_DISTRIBUIDO+$this->CANTIDAD;
+        $cantidadAsignada = $this->CANTIDAD;
+        $pesodistribuido=$modelCarga->PESO_DISTRIBUIDO-$cantidadAnterior;
+        $sumaCarga = $pesodistribuido+$cantidadAsignada;        
         if($sumaCarga > $modelCarga->PESO_ASIGNADO){
                 $this->addError('CANTIDAD', 'El Peso distribuido sobrepasa el disponible en la carga.');
         }

@@ -64,7 +64,11 @@ class CuentasController extends Controller
     public function actionCreate()
     {
         $model = new Cuentas();
-
+        $empresa_id =Yii::$app->request->get('id');
+        if(isset($empresa_id)){
+        $model->EMPRESA_ID =$empresa_id;    
+        }
+        //var_dump($empresa_id);die;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
