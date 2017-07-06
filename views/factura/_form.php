@@ -84,23 +84,25 @@ $this->registerCssFile("@web/css/acordeon.css");
 
                     <div class="detail">
                         <div class="col-sm-12 well">
-                            <?php $pagos = Pagos::find(['FLETE_ID'=>$flete->ID])->with('cONCEPTOS')->all(); ?>
+                            <?php $pagos = Pagos::find()->with('cONCEPTOS')->where(['FLETE_ID'=>$flete->ID])->all(); ?>
 
                             <?php  //var_dump(count($pagos));die; ?>
 
                             <?php if($pagos): ?>
 
+                                <h2>Pagos Asociados</h2>
                                 <?php foreach($pagos as $pago): ?>
-                                    <table>
+                            <?php //var_dump($pago);die;?>
+                                    <table border="1">
                                         <tr>
                                             <th>Concepto</th>
                                             <th>Monto</th>
                                             <th>Estatus del Pago</th>
                                         </tr>
                                         <tr>
-                                            <td><?= $pago->NOMBRE ?></td>
+                                            <td><?= $pago->cONCEPTOS->NOMBRE ?></td>
                                             <td><?= $pago->MONTO ?></td>
-                                            <td><?= $pago->ESTATUS ?></td>
+                                            <td><?= $pago->ESTATUS_PAGO ?></td>
                                         </tr>
                                     </table>
                                 <?php endforeach; ?>

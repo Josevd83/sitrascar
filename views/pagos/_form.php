@@ -51,15 +51,17 @@ use yii\web\View;
                         <tbody>
                         <?= $form->field($model, 'CONCEPTOS_ID')->checkboxList($var, [
                             'item' => function($index, $label, $name, $checked, $value) {
-                                //$monto = Tarifas::findOne($value)->MONTO;
-                                $monto = 100;
-                                echo "<tr><td style='border-top: 1px solid #ddd;'><input tabindex='{$index}' type='checkbox' {$checked}'name='{$name}'value='{$value}' class='concepto' rel='$monto'> {$label}</td><td style='border-top: 1px solid #ddd;'><span>$monto</span></td></tr>";
+                                $monto = Tarifas::findOne($value)->MONTO;
+                                //$monto = 100;
+                                //echo "<tr><td style='border-top: 1px solid #ddd;'><input tabindex='{$index}' type='checkbox' {$checked}'name='{$name}'value='{$value}' class='concepto' rel='$monto'> {$label}</td><td style='border-top: 1px solid #ddd;'><span>$monto</span></td></tr>";
+				echo "<tr><td style='border-top: 1px solid #ddd;'><input name='{$name}' value='{$value}' type='checkbox' rel='$monto' class='concepto' > {$label}</td><td style='border-top: 1px solid #ddd;'><span>$monto</span></td></tr>";
                             }])->label('');
                         ?>
-                            <tr><td class="text-right" style='border-top: 1px solid #ddd;'><b>Total:</b></td><td style='border-top: 1px solid #ddd;'><b><?= Html::input('text', 'monto', 0.00, ['class' => 'form-control', 'style'=>'width:100px','readonly'=>'readonly','id'=>'totalMonto']) ?></b></td></tr>
+                            <tr><td class="text-right" style='border-top: 1px solid #ddd;'><b>Total:</b></td><td style='border-top: 1px solid #ddd;'><b><?= Html::input('text', 'montoTotal', 0.00, ['class' => 'form-control', 'style'=>'width:100px','readonly'=>'readonly','id'=>'totalMonto']) ?></b></td></tr>
                         </tbody> 
                     </table>
-                        <?php //= $form->field($model, 'CONCEPTOS_ID')->checkboxList($var,['separator'=>'<br/>'])->label('Conceptos') ?>
+		    <?= $form->field($modelFlete, "ID")->hiddenInput()->label(false) ?>
+                        <?php // echo $form->field($model, 'CONCEPTOS_ID')->checkboxList($var,['separator'=>'<br/>'])->label('Conceptos') ?>
                     <?php endif; ?>
 
                      <div class="form-group">
@@ -93,7 +95,7 @@ use yii\web\View;
 
 
 	$('.concepto').change(function () {
-	    var count = 0;
+	    var count = 0.00;
 	    var table_abc = document.getElementsByClassName('concepto');
 	    for (var i = 0; table_abc[i]; ++i) {
 

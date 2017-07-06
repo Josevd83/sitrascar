@@ -163,17 +163,59 @@ class ListaController extends Controller
     {
         $model = $this->findModel($id);
         $modelDistribucion = Distribucion::findOne($model->DISTRIBUCION_ID);
-        $modelFlete = new Flete();
+        $modelFlete = new Flete();// Flete::find()->where(['LISTA_ID'=>$model->ID]);
+        //var_dump($modelFlete);die;
+        //$modelFlete->EMPRESACHOFER_ID = [11=>11,22=>22,33=>33,44=>44,55=>55];
 
         //var_dump($modelDistribucion->attributes);die;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $modelFlete->load(Yii::$app->request->post())) {
+            $fecha = Yii::$app->formatter->asDate($model->FECHA_CREACION, 'Y-MM-dd');
+
+            $model->ESTATUS_LISTA = 1;
+            $model->FECHA_CREACION = $fecha;
+            if($model->save()){
+
+		$fletes_anteriores = Flete::findAll(['LISTA_ID'=>$model->ID]);
+		foreach($fletes_anteriores as $flete_anterior){
+			$empresa_chofer_anterior = Empresachofer::findOne($flete_anterior->EMPRESACHOFER_ID);
+			$empresa_chofer_anterior->BLOQUEADO = '0';
+			$empresa_chofer_anterior->save();
+			$flete_anterior->delete();
+		}
+		
+                $choferes = Json::decode($modelFlete->EMPRESACHOFER_ID);
+                foreach($choferes as $chofer)
+                {
+                    $modelFlete = new Flete();
+                    $modelEmpresachofer = Empresachofer::findOne(['CHOFER_ID'=>$chofer]);
+
+                    $modelFlete->ESTATUS_FLETE_ID = 1;
+                    $modelFlete->EMPRESACHOFER_ID = $modelEmpresachofer->ID;
+                    $modelFlete->VEHICULO_ID = $modelEmpresachofer->VEHICULO_ID;
+                    $modelFlete->LISTA_ID = $model->ID;
+
+                    if($modelFlete->save()){
+                        $modelEmpresachofer->BLOQUEADO = "1";
+                        $modelEmpresachofer->save();
+                    }
+                }
+
+            }
+
+            Yii::$app->getSession()->setFlash('success', [
+                'type' => Growl::TYPE_SUCCESS,
+                'icon' => 'fa fa-users',
+                'message' => Html::encode('La Lista ha sido creada exitósamente'),
+                'title' => Html::encode('Resultado'),
+                'showSeparator' => true,
+            ]);
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'modelDistribucion' => $modelDistribucion,
                 'modelFlete' => $modelFlete,
+                'modelDistribucion' => $modelDistribucion,
             ]);
         }
     }
@@ -356,6 +398,40 @@ $parametros = [':CENTRALES_ID' => $cat_id];
                     }
                 } else {
                     echo "'<option>No hay choferes disponibles</option>'";
+                }
+            }
+    }
+
+    public function actionBuscarchoferseleccionado()
+    {
+        //$id_empresa =  [':id_empresa' => Yii::$app->request->post('id_empresa')];
+//echo $id;die;
+
+        $id_lista =  Yii::$app->request->post('id_lista');
+
+        if ($id_lista != null) {
+            //$choferes = Chofer::find(['EMPRESA_ID'=>$id_empresa])->with('empresaChofers')->all();
+            //$choferes = EmpresaChofer::find(['EMPRESA_ID'=>$id_empresa])->select(['chofer.ID as ID', 'chofer.PRIMER_NOMBRE as PRIMER_NOMBRE'])->with('cHOFER')->all();
+            $parametros = [':LISTA_ID' => $id_lista];
+            $empresachoferes = Yii::$app->db->createCommand("SELECT chofer.ID,
+                                                             CONCAT(chofer.PRIMER_NOMBRE, ' ', IFNULL(chofer.SEGUNDO_NOMBRE, ''), ' ', chofer.PRIMER_APELLIDO, ' ', IFNULL(chofer.SEGUNDO_APELLIDO, '')) AS nombre 
+                                                      FROM flete JOIN empresachofer ON flete.EMPRESACHOFER_ID=empresachofer.ID
+                                                                 JOIN chofer ON empresachofer.CHOFER_ID=chofer.ID
+                                                      WHERE flete.LISTA_ID=:LISTA_ID")->bindValues($parametros)->queryAll();
+            //$consulta = Yii::$app->db->createCommand('SELECT ID as id, DESCRIPCION as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
+            //$fletes = Flete::findAll(['LISTA_ID'=>$id_lista]);
+            //$empresachoferes = Empresachofer::findAll(['EMPRESA_ID'=>$id_empresa, 'BLOQUEADO'=>'0'])->with('cHOFER');
+            //var_dump($empresaChoferes);die;
+            //echo count($empresaChoferes);die;
+            if (count($empresachoferes) > 0) {
+                    foreach ($empresachoferes as $empresachofer) {
+                        //$chofer = $empresaChofer->cHOFER;
+                        //$chofer = Chofer::findOne(['ID'=>$empresachofer->CHOFER_ID]);
+                        echo "<option value='" . $empresachofer['ID'] . "'>" . $empresachofer['nombre'] . "</option>";
+                    }
+                } else {
+                    //echo "'<option>No hay choferes disponibles</option>'";
+		   echo "''";
                 }
             }
     }

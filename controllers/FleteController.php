@@ -215,7 +215,8 @@ class FleteController extends Controller
 
         $modelLista = Lista::findOne(Yii::$app->request->post('lista'));
         $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
-        $modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
+	$modelFlete = Flete::findOne(['LISTA_ID'=>$modelLista->ID]);
+        //$modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
         //$modelCarga = Carga::find();
 
 

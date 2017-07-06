@@ -42,6 +42,7 @@ use yii\web\View;
 
     <div class="form-group">
         <?php echo '<label class="control-label">Fecha de Carga</label>'; ?>
+        <?php if($model->FECHA_CREACION)$model->FECHA_CREACION = Yii::$app->formatter->asDate($model->FECHA_CREACION, 'dd-MM-Y'); ?>
         <?php echo DatePicker::widget([
                 'model' => $model, 
                 'attribute' => 'FECHA_CREACION',
@@ -99,47 +100,50 @@ use yii\web\View;
                 'showing' => ' - En lista',
                 'available' => 'Choferes Disponible',
                 'selected' => 'Choferes Seleccionados',
-                'id'=>'idddddddddd'
             ]
           ]);
     ?>
     </div>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Crear Lista' : 'Actualizar Lista', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Crear Lista' : 'Actualizar Lista', ['class' => $model->isNewRecord ? 'btn btn-success actualizar' : 'btn btn-primary actualizar']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
 
+<?php $this->registerJs("
+
+        $.ajax({
+                type: 'POST',
+                //dataType: 'json',
+                url: '".Url::toRoute("lista/buscarchoferseleccionado")."',
+                data: {id_lista:$model->ID},
+                success:function(data){
+                    $('.selected').html(data);
+                }
+            }); //ajax   
+
+",View::POS_READY);
+ ?>
+
 <?php $this->registerJs(
         "$('#lista-empresa').on('change', function() {
             var id_empresa = $('#lista-empresa').val();
             var limiteChoferes = $('.selected option:not(:selected)').length;
             if(limiteChoferes >= 20){
-                alert('Límite de choferes alcanzado (20)');
+                ////alert('Límite de choferes alcanzado (20)');
                 return false;
             }
-            alert(limiteChoferes);
             var choferesSeleccionados = [];
             $('.selected option:not(:selected)').each(function(i, value){ 
               //choferesSeleccionados[i] = $('.selected').text(); 
               choferesSeleccionados[i] = $(this).attr('value'); 
             });
-             /*$('.selected').each(function(i, value){ 
-              //choferesSeleccionados[i] = $('.selected').attr('value'); 
-              choferesSeleccionados[i] = $(this).attr('value'); 
-            });*/
-console.log(choferesSeleccionados);
-            alert(choferesSeleccionados);
+
             $('.unselected').empty();
-            /*$.post( '".Url::toRoute("lista/buscarchofer")."&id='+id_empresa,
-                 function(data){
-                    $('.unselected').html(data);
-                }
-            )*/
-            //console.log(hola);
+
             $.ajax({
                 type: 'POST',
                 //dataType: 'json',
@@ -152,4 +156,26 @@ console.log(choferesSeleccionados);
         });",
         View::POS_READY 
     );
+ ?>
+
+<?php $this->registerJs("
+    $('.atr').hide();
+    $('.atl').hide();
+
+    $('.actualizar').on('click',function(){
+        var selec = 0;
+        var noselec = 0;
+        $('.selected').each(function(){
+            selec = $('.selected option:not(:selected)').length;
+            noselec = $('.selected option:selected').length;
+        });
+
+        var suma = selec + noselec;
+
+        if(suma > 20){
+            alert('Ha excedido el máximo de choferes seleccionados');
+            return false;
+        }
+    });
+",View::POS_READY);
  ?>

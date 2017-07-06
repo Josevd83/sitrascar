@@ -70,7 +70,8 @@ class FacturaController extends Controller
         $model = new Factura();
         $modelFlete = Flete::find()->with('lISTA','pagos')->all();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            var_dump($model);die;
             return $this->redirect(['view', 'id' => $model->ID]);
         } else {
             return $this->render('create', [
