@@ -8,6 +8,7 @@ use app\models\Segflete;
 use app\models\SegfleteSearch;
 use app\models\Lista;
 use app\models\Distribucion;
+use app\models\Carga;
 use app\models\FleteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -211,17 +212,17 @@ class FleteController extends Controller
   public function actionOrdencargacva()
   {
     //var_dump(Yii::$app->request->post());die;
-    if (Yii::$app->request->post('lista')){
-
-        $modelLista = Lista::findOne(Yii::$app->request->post('lista'));
+    if (Yii::$app->request->post('flete')){
+	$modelFlete = Flete::findOne(Yii::$app->request->post('flete'));
+        $modelLista = Lista::findOne($modelFlete->LISTA_ID);
         $modelDistribucion = Distribucion::findOne($modelLista->DISTRIBUCION_ID);
-	$modelFlete = Flete::findOne(['LISTA_ID'=>$modelLista->ID]);
+	$modelCarga = Carga::findOne($modelDistribucion->CARGA_ID);
         //$modelFlete = Flete::findAll(['LISTA_ID'=>$modelLista->ID]);
         //$modelCarga = Carga::find();
 
 
         $imagen =  Html::img('@web/images/logo-sitrascar.png');
-        $content = $this->renderPartial('orden_carga_cva',['modelLista'=>$modelLista, 'modelDistribucion'=>$modelDistribucion, 'modelFlete'=>$modelFlete]);
+        $content = $this->renderPartial('orden_carga_cva',['modelLista'=>$modelLista, 'modelDistribucion'=>$modelDistribucion, 'modelFlete'=>$modelFlete, 'modelCarga'=>$modelCarga]);
         $pdf = new Pdf(['cssInline' => '.kv-heading-1{font-size:24px}']); // or new Pdf();
         $mpdf = $pdf->api; // fetches mpdf api
         $mpdf->SetHTMLHeader("<div class='encabezado'>$imagen GLOBAL FREIGHT, C.A.</div>");

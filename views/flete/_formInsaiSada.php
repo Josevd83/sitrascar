@@ -139,7 +139,7 @@ $this->registerCss("
                             ?>
                         </div>
                     </div>
-                    <?= (!empty($flete->GUIA_SADA) && !empty($flete->ORDEN_PESO_CARGA))? Html::a('Generar Orden de Carga CVA', ['flete/ordencargacva'],['title'=>'Generar Orden de Carga CVA','data-method'=>'POST','data-params' =>['lista' => $flete->ID],'class'=>'btn btn-info btn-xs']): '' ?>
+                    <?= (!empty($flete->GUIA_SADA) && !empty($flete->ORDEN_PESO_CARGA))? Html::a('Generar Orden de Carga CVA', ['flete/ordencargacva'],['title'=>'Generar Orden de Carga CVA','data-method'=>'POST','data-params' =>['flete' => $flete->ID],'class'=>'btn btn-info btn-xs']): '' ?>
                 </li>
             <?php endforeach; ?>
         </ul>

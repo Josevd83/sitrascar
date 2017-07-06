@@ -404,29 +404,20 @@ $parametros = [':CENTRALES_ID' => $cat_id];
 
     public function actionBuscarchoferseleccionado()
     {
-        //$id_empresa =  [':id_empresa' => Yii::$app->request->post('id_empresa')];
-//echo $id;die;
 
         $id_lista =  Yii::$app->request->post('id_lista');
 
         if ($id_lista != null) {
-            //$choferes = Chofer::find(['EMPRESA_ID'=>$id_empresa])->with('empresaChofers')->all();
-            //$choferes = EmpresaChofer::find(['EMPRESA_ID'=>$id_empresa])->select(['chofer.ID as ID', 'chofer.PRIMER_NOMBRE as PRIMER_NOMBRE'])->with('cHOFER')->all();
             $parametros = [':LISTA_ID' => $id_lista];
             $empresachoferes = Yii::$app->db->createCommand("SELECT chofer.ID,
                                                              CONCAT(chofer.PRIMER_NOMBRE, ' ', IFNULL(chofer.SEGUNDO_NOMBRE, ''), ' ', chofer.PRIMER_APELLIDO, ' ', IFNULL(chofer.SEGUNDO_APELLIDO, '')) AS nombre 
                                                       FROM flete JOIN empresachofer ON flete.EMPRESACHOFER_ID=empresachofer.ID
                                                                  JOIN chofer ON empresachofer.CHOFER_ID=chofer.ID
                                                       WHERE flete.LISTA_ID=:LISTA_ID")->bindValues($parametros)->queryAll();
-            //$consulta = Yii::$app->db->createCommand('SELECT ID as id, DESCRIPCION as name FROM distribucion WHERE CENTRALES_ID=:CENTRALES_ID  AND CANTIDAD>CANT_DESPACHADA AND CODIGO_SICA IS NOT NULL')->bindValues($parametros)->queryAll();
-            //$fletes = Flete::findAll(['LISTA_ID'=>$id_lista]);
-            //$empresachoferes = Empresachofer::findAll(['EMPRESA_ID'=>$id_empresa, 'BLOQUEADO'=>'0'])->with('cHOFER');
-            //var_dump($empresaChoferes);die;
-            //echo count($empresaChoferes);die;
+
             if (count($empresachoferes) > 0) {
                     foreach ($empresachoferes as $empresachofer) {
-                        //$chofer = $empresaChofer->cHOFER;
-                        //$chofer = Chofer::findOne(['ID'=>$empresachofer->CHOFER_ID]);
+
                         echo "<option value='" . $empresachofer['ID'] . "'>" . $empresachofer['nombre'] . "</option>";
                     }
                 } else {
